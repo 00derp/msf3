@@ -1,0 +1,155 @@
+
+KARMA + Metasploit 3 == Karmetasploit ¶
+Background ¶
+
+In 2004 Dino Dai Zovi and Shane Macaulay presented  All Your Layer Are Belong To Us at Pacsec in 
+Tokyo. This presentation focused on the insecure behavior of wireless clients. Accompanying the 
+presentation was a tool called KARMA (KARMA Attacks Radioed Machines Automatically). This tool acts 
+as wireless access point and responds to all probe requests from wireless clients. Once a client has 
+associated with the KARMA access point, every service they try to access leads to a malicious 
+application. The services side of KARMA was written in Ruby, making it a perfect match for 
+integration with version 3 of the Metasploit Framework.
+Introduction ¶
+
+The original version of KARMA depended on a modified version of the  MADWIFI driver for Atheros-based 
+wireless cards. While this approach works, its limits the types of network cards that can be used and 
+requires some effort to maintain the patch against the latest version of the MADWIFI source code. To 
+remedy this, the  Aircrack-NG developers (specifically hirte) developed a user-mode access point that 
+works with any wireless card that supports monitor mode and injection. This tool is called 'airbase' 
+and was included in the 1.0rc1 release of Aircrack-NG. Not only does airbase solve the hardware 
+limits of using a patched MADWIFI driver, but its also much easier to modify and integrate new 
+features. The Metasploit staff contributed a  patch to airbase that adds multiple ESSID beaconing, 
+the option to temporarily beacon ESSIDs seen in probe requests, the ability to tune the beacon 
+interval, and an option to force promiscuous (respond to all probes) mode regardless of whether an 
+ESSID has been specified. The result is powerful replacement for the MADWIFI patch that can lure in a 
+much wider range of wireless clients.
+Integration ¶
+
+With the access point working, the next requirement was a number of "evil" network services. These 
+services include a DNS daemon that responds to all requests, a POP3 service, an IMAP4 service, a SMTP 
+service, a FTP service, a couple of different SMB services, and most importantly, a web service. 
+These modules can be found under the auxiliary/server module subdirectory in the development version 
+of the Metasploit Framework. All DNS lookups result in the IP address of the access point being 
+returned, resulting in a blackhole effect for all email, web, and other network traffic.
+Prerequisites ¶
+
+The first thing required to run Karmetasploit is a Linux laptop with a supported network card. For a 
+list of supported network cards, please see the  Aircrack-NG Compatibility Page. Once the hardware 
+requirements are met, the latest version of Aircrack-NG needs to be checked out from the Subversion 
+repository and compiled:
+
+$ svn co http://trac.aircrack-ng.org/svn/trunk/ aircrack-ng 
+$ make
+# make install 
+
+By default, Aircrack-NG will install to /usr/local/bin and /usr/local/sbin. Once Aircrack-NG has been 
+installed, verify that your wireless card is able to inject packets. First, place the card into 
+monitor mode (use airmon-ng to work around iwconfig bugs with mac80211 drivers):
+
+# airmon-ng start [wifi-interface]
+
+Next, use aireplay-ng to verify that injection is functioning:
+
+# aireplay-ng --test [monitor-interface]
+02:19:20  Trying broadcast probe requests...
+02:19:20  Injection is working!
+02:19:22  Found 2 APs
+02:19:22  Trying directed probe requests...
+
+02:19:22  00:xx:01:xx:78:xx - channel: 11 - 'buffaloap'
+02:19:22  Ping (min/avg/max): 1.759ms/12.232ms/65.397ms Power: 7.36
+02:19:22  28/30:  93%
+
+02:19:22  06:xx:B3:xx:02:xx - channel: 11 - 'linksys'
+02:19:23  Ping (min/avg/max): 3.184ms/3.682ms/6.579ms Power: -128.00
+02:19:23  30/30: 100%
+
+The output of aireplay-ng should indicate that injection is working and that one of the local access 
+points could be reached. If every access point returns 0% and the message indicating injection is 
+working is not there, you likely need to use a different/patched driver or a different wireless card.
+
+Metasploit does not have a DHCP module, so a third-party DHCP service must be configured and 
+installed. The easiest way to accomplish this is by installed the ISC "dhcpd" package for your 
+distribution. On Ubuntu-based systems, the package is called "dhcpd3" (sudo apt-get install dhcpd3). 
+Once the DHCP server has been installed, an appropriate configuration file needs to be created. This 
+file is normally called "dhcpd.conf" or "dhcpd3.conf" and resides in /etc, /etc/dhcp, or /etc/dhcp3. 
+The example below uses the 10.0.0.0/24 network with the access point configured at 10.0.0.1.
+
+option domain-name-servers 10.0.0.1;
+
+default-lease-time 60;
+max-lease-time 72;
+
+ddns-update-style none;
+
+authoritative;
+
+log-facility local7;
+
+subnet 10.0.0.0 netmask 255.255.255.0 {
+  range 10.0.0.100 10.0.0.254;
+  option routers 10.0.0.1;
+  option domain-name-servers 10.0.0.1;
+}
+
+The next prerequisite is the Metasploit Framework itself. The latest version can be retrieved from 
+Subversion with the following command:
+
+$ svn co http://metasploit.com/svn/framework3/trunk msf3
+
+To run Karmetasploit, a valid database backend needs to be available. The easy way to do this is by 
+installing  RubyGems and then using the "gem" command to install the SQLite3 backend and 
+ActiveRecord?. the SQLite3 backend requires the sqlite3 libraries and development headers to be 
+installed (apt-get install libsqlite3-dev).
+
+# gem install activerecord sqlite3-ruby
+
+Running Karmetasploit ¶
+
+To run Karmetasploit, there are three things that need to happen. First, airbase-ng must be started 
+and configured as a greedy wireless access point. The following example will beacon the ESSID "Free 
+WiFi", respond to all probe requests, and rebroadcast all probes as beacons for 30 seconds:
+
+# airbase-ng -P -C 30 -e "Free WiFi" -v [monitor-interface]
+
+Second, we need to configure the IP address of the at0 interface to match.
+
+# ifconfig at0 up 10.0.0.1 netmask 255.255.255.0
+
+Third, the DHCP server needs to be started on the "at0" TUN/TAP interface created by airbase-ng:
+
+# dhcpd -cf /etc/dhcpd.conf at0
+
+Finally, Metasploit itself needs to be configured. While its possible to configure each service by 
+hand, its more efficient to use a resource file with the msfconsole interface. A sample resource 
+file, configured to use 10.0.0.1 as the access point address, with nearly every feature enabled, can 
+be downloaded here KARMA.RC. To use this resource file, run msfconsole with the -r parameter. Keep in 
+mind that msfconsole must be run as root for the capture services to function.
+
+# msfconsole -r karma.rc
+
+Once Metasploit processes the commands in the resource file, the standard msfconsole shell will be 
+available for commands. As clients connect to the access point and try to access the network, the 
+service modules will do what they can to extract information from the client and exploit browser 
+vulnerabilities. All of this information is logged to the SQLite3 database, which is specified as 
+/root/karma.db in the sample resource file. At any time, the "db_notes" command can be used to look 
+at the captured credentials and requests. Starting up tcpdump on the at0 interface and capturing all 
+traffic to a file is often a good idea as well, just in case something sensitive comes across the 
+network that Metasploit doesn't know about yet.
+Configuring Karmetasploit ¶
+
+Since Karmetasploit is implemented as a loose collection of modules, there is no "configuration" 
+besides the resource file and the module options. The best way to learn about all of the features is 
+to examine the options of each module. More information about specific modules will be added in the 
+future.
+Blackhole Routing ¶
+
+Often a client will join the karmetasploit router with DNS entries for a machine still cached. 
+Instead of asking the Metasploit module for the DNS name, it will instead try to connect directly to 
+whatever target IP address it has cached. This evades the DNS trap, but there is a quick solution 
+(for Linux users, at least). The following iptables rule (courtesy Sebastien Raveau) will redirect 
+all network traffic on the AP interface back to the system.
+
+# iptables -t nat -A PREROUTING -i at0 -j REDIRECT
+
+
