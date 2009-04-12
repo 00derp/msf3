@@ -41,7 +41,7 @@ LIBRUBYARG_SHARED = -l$(RUBY_SO_NAME)
 LIBRUBYARG_STATIC = -l$(RUBY_SO_NAME)-static
 
 RUBY_EXTCONF_H = 
-CFLAGS   =  -fPIC -Wall -I./SPIKE/SPIKE/include -I/mnt/sdb/bin/rspike/ext/SPIKE/SPIKE/src 
+CFLAGS   =  -fPIC -Wall -I./SPIKE/SPIKE/include -I/mnt/sdb/bin/msf3/external/rspike/ext/SPIKE/SPIKE/src 
 INCFLAGS = -I. -I. -I/usr/lib/ruby/1.8/i486-linux -I.
 CPPFLAGS =  
 CXXFLAGS = $(CFLAGS) 
@@ -68,8 +68,8 @@ COPY = cp
 
 preload = 
 
-libpath = . $(libdir) /mnt/sdb/bin/rspike/ext/SPIKE/SPIKE/src
-LIBPATH =  -L"." -L"$(libdir)" -L"/mnt/sdb/bin/rspike/ext/SPIKE/SPIKE/src"
+libpath = . $(libdir)
+LIBPATH =  -L"." -L"$(libdir)"
 DEFFILE = 
 
 CLEANFILES = mkmf.log
@@ -81,7 +81,7 @@ target_prefix =
 LOCAL_LIBS = 
 LIBS = $(LIBRUBYARG_SHARED) -ldlrpc  -lpthread -ldl -lcrypt -lm   -lc
 SRCS = rspike.c spike.c hdebug.c tcpstuff.c udpstuff.c dlrpc.c src
-OBJS = rspike.o /mnt/sdb/bin/rspike/ext/SPIKE/SPIKE/src/spike.o /mnt/sdb/bin/rspike/ext/SPIKE/SPIKE/src/hdebug.o /mnt/sdb/bin/rspike/ext/SPIKE/SPIKE/src/tcpstuff.o /mnt/sdb/bin/rspike/ext/SPIKE/SPIKE/src/udpstuff.o /mnt/sdb/bin/rspike/ext/SPIKE/SPIKE/src/dlrpc.o -L/mnt/sdb/bin/rspike/ext/SPIKE/SPIKE/src
+OBJS = rspike.o /mnt/sdb/bin/msf3/external/rspike/ext/SPIKE/SPIKE/src/spike.o /mnt/sdb/bin/msf3/external/rspike/ext/SPIKE/SPIKE/src/hdebug.o /mnt/sdb/bin/msf3/external/rspike/ext/SPIKE/SPIKE/src/tcpstuff.o /mnt/sdb/bin/msf3/external/rspike/ext/SPIKE/SPIKE/src/udpstuff.o /mnt/sdb/bin/msf3/external/rspike/ext/SPIKE/SPIKE/src/dlrpc.o -L/mnt/sdb/bin/msf3/external/rspike/ext/SPIKE/SPIKE/src
 TARGET = rspike
 DLLIB = $(TARGET).so
 EXTSTATIC = 

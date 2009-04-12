@@ -1,6 +1,6 @@
 require 'mkmf'
 
-spikesrc = ENV["PWD"] + "/ext/SPIKE/SPIKE/src"
+spikesrc = ENV["PWD"] + "/SPIKE/SPIKE/src"
 #spikesrc = "SPIKE/SPIKE/src"
 ENV['LD_LIBRARY_PATH'] = spikesrc
 
