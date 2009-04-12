@@ -1,5 +1,9 @@
 ##
+<<<<<<< HEAD:modules/auxiliary/scanner/sip/options.rb
+# $Id: options.rb 6427 2009-03-29 05:51:08Z hdm $
+=======
 # $Id: options.rb 6435 2009-03-29 17:58:15Z hdm $
+>>>>>>> metasploit:modules/auxiliary/scanner/sip/options.rb
 ##
 
 ##
@@ -21,7 +25,11 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'SIP Endpoint Scanner',
+<<<<<<< HEAD:modules/auxiliary/scanner/sip/options.rb
+			'Version'     => '$Revision: 6427 $',
+=======
 			'Version'     => '$Revision: 6435 $',
+>>>>>>> metasploit:modules/auxiliary/scanner/sip/options.rb
 			'Description' => 'Scan for SIP devices using OPTIONS requests',
 			'Author'      => 'hdm',
 			'License'     => MSF_LICENSE
@@ -69,8 +77,11 @@ class Metasploit3 < Msf::Auxiliary
 						parse_reply(r)
 					end
 				end
+<<<<<<< HEAD:modules/auxiliary/scanner/sip/options.rb
+=======
 
 				idx += 1
+>>>>>>> metasploit:modules/auxiliary/scanner/sip/options.rb
 			end
 
 			while (r = udp_sock.recvfrom(65535, 3) and r[1])
@@ -81,8 +92,11 @@ class Metasploit3 < Msf::Auxiliary
 			raise $!
 		rescue ::Exception => e
 			print_status("Unknown error: #{e.class} #{e}")
+<<<<<<< HEAD:modules/auxiliary/scanner/sip/options.rb
+=======
 		ensure
 			udp_sock.close if udp_sock
+>>>>>>> metasploit:modules/auxiliary/scanner/sip/options.rb
 		end
 	end
 
@@ -128,7 +142,11 @@ class Metasploit3 < Msf::Auxiliary
 			:name   => 'sip'							
 		)
 		
+<<<<<<< HEAD:modules/auxiliary/scanner/sip/options.rb
+		if(agent != 'Unknown')
+=======
 		if(not agent.empty?)
+>>>>>>> metasploit:modules/auxiliary/scanner/sip/options.rb
 			report_note(
 				:host   => pkt[1],
 				:ntype  => 'sip_useragent',

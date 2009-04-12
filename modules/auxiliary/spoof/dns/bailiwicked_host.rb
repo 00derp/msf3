@@ -87,7 +87,7 @@ class Metasploit3 < Msf::Auxiliary
 		1.upto(30) do |i|
 		
 			req = Resolv::DNS::Message.new
-			txt = "spoofprobe-check-#{i}-#{$$}#{(rand()*1000000).to_i}.red.metasploit.com"
+			txt = "a-#{i}-#{$$}#{(rand()*1000000).to_i}.r.m.com"
 			req.add_question(txt, Resolv::DNS::Resource::IN::TXT)
 			req.rd = 1
 			
@@ -99,7 +99,7 @@ class Metasploit3 < Msf::Auxiliary
 				reps += 1
 				res = Resolv::DNS::Message.decode(res)
 				res.each_answer do |name, ttl, data|
-					if (name.to_s == txt and data.strings.join('') =~ /^([^\s]+)\s+.*red\.metasploit\.com/m)
+					if (name.to_s == txt and data.strings.join('') =~ /^([^\s]+)\s+.*r\.m\.com/m)
 						t_addr, t_port = $1.split(':')
 
 						print_status(" >> ADDRESS: #{t_addr}  PORT: #{t_port}")
@@ -166,7 +166,7 @@ class Metasploit3 < Msf::Auxiliary
 		# Get the source port via the metasploit service if it's not set
 		if sport.to_i == 0
 			req = Resolv::DNS::Message.new
-			txt = "spoofprobe-#{$$}#{(rand()*1000000).to_i}.red.metasploit.com"
+			txt = "a-#{$$}#{(rand()*1000000).to_i}.r.m.com"
 			req.add_question(txt, Resolv::DNS::Resource::IN::TXT)
 			req.rd = 1
 			
@@ -176,7 +176,7 @@ class Metasploit3 < Msf::Auxiliary
 			if res and res.length > 0
 				res = Resolv::DNS::Message.decode(res)
 				res.each_answer do |name, ttl, data|
-					if (name.to_s == txt and data.strings.join('') =~ /^([^\s]+)\s+.*red\.metasploit\.com/m)
+					if (name.to_s == txt and data.strings.join('') =~ /^([^\s]+)\s+.*r\.m\.com/m)
 						t_addr, t_port = $1.split(':')
 						sport = t_port.to_i
 
