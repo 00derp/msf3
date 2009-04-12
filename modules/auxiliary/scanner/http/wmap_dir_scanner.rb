@@ -1,5 +1,5 @@
 ##
-# $Id: wmap_dir_scanner.rb 6413 2009-03-28 17:45:14Z hdm $
+# $Id: wmap_dir_scanner.rb 6477 2009-04-12 02:00:50Z et $
 ##
 
 ##
@@ -28,7 +28,7 @@ class Metasploit3 < Msf::Auxiliary
 			},
 			'Author' 		=> [ 'et [at] metasploit.com' ],
 			'License'		=> BSD_LICENSE,
-			'Version'		=> '$Revision: 6413 $'))   
+			'Version'		=> '$Revision: 6477 $'))   
 			
 		register_options(
 			[
@@ -118,9 +118,9 @@ class Metasploit3 < Msf::Auxiliary
 
 				
 				if(not res or ((res.code.to_i == ecode) or (emesg and res.body.index(emesg))))
-					print_status("NOT Found #{wmap_base_url}#{tpath}#{testfdir} #{res.code} (#{target_host})") 					
+					print_status("NOT Found #{wmap_base_url}#{tpath}#{testfdir} #{res.code} (#{wmap_target_host})") 					
 				else
-					print_status("Found #{wmap_base_url}#{tpath}#{testfdir} #{res.code} (#{target_host})")
+					print_status("Found #{wmap_base_url}#{tpath}#{testfdir} #{res.code} (#{wmap_target_host})")
 					rep_id = wmap_base_report_id(
 									wmap_target_host,
 									wmap_target_port,
