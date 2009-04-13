@@ -47,6 +47,7 @@ class Metasploit3 < Msf::Auxiliary
 		disconnect
 
         print_status("Checking for success...")
+        sleep 2
         begin
             connect
         rescue ::Interrupt
