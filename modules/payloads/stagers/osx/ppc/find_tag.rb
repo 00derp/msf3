@@ -1,12 +1,12 @@
 ##
-# $Id: find_tag.rb 5773 2008-10-19 21:03:39Z ramon $
+# $Id: find_tag.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -29,7 +29,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'Find Tag Stager',
-			'Version'       => '$Revision: 5773 $',
+			'Version'       => '$Revision: 6479 $',
 			'Description'   => 'Use an established connection',
 			'Author'        => 'hdm',
 			'License'       => MSF_LICENSE,

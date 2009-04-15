@@ -1,12 +1,12 @@
 ##
-# $Id: scanner_range.rb 5773 2008-10-19 21:03:39Z ramon $
+# $Id: scanner_range.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -20,7 +20,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'Simple Recon Module Tester',
-			'Version'     => '$Revision: 5773 $',
+			'Version'     => '$Revision: 6479 $',
 			'Description' => 'Simple Recon Module Tester',
 			'Author'      => 'hdm',
 			'License'     => MSF_LICENSE

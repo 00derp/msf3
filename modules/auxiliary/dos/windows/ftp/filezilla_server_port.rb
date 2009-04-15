@@ -1,12 +1,12 @@
 ##
-# $Id: filezilla_server_port.rb 6095 2009-01-09 05:33:26Z patrickw $
+# $Id: filezilla_server_port.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/ 
+# http://metasploit.com/framework/ 
 ##
 
 require 'msf/core'
@@ -27,7 +27,7 @@ class Metasploit3 < Msf::Auxiliary
 			},
 			'Author' 		=> [ 'patrick' ],
 			'License'        	=> MSF_LICENSE,
-			'Version'        	=> '$Revision: 6095 $',
+			'Version'        	=> '$Revision: 6479 $',
 			'References'     =>
 				[
 					[ 'BID', '21542' ],

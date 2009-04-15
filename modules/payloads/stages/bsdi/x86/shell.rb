@@ -1,12 +1,12 @@
 ##
-# $Id: shell.rb 6407 2009-03-28 06:03:35Z hdm $
+# $Id: shell.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -19,7 +19,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'BSDi Command Shell',
-			'Version'       => '$Revision: 6407 $',
+			'Version'       => '$Revision: 6479 $',
 			'Description'   => 'Spawn a command shell',
 			'Author'        => 'skape',
 			'License'       => MSF_LICENSE,

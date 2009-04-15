@@ -1,12 +1,12 @@
 ##
-# $Id: ms05_047_pnp.rb 5948 2008-11-18 19:56:03Z hdm $
+# $Id: ms05_047_pnp.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -34,7 +34,7 @@ class Metasploit3 < Msf::Exploit::Remote
 			},
 			'Author'         => [ 'hdm' ],
 			'License'        => MSF_LICENSE,
-			'Version'        => '$Revision: 5948 $',
+			'Version'        => '$Revision: 6479 $',
 			'References'     =>
 				[
 					[ 'CVE', '2005-2120' ],

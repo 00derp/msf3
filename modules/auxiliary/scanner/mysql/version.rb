@@ -1,12 +1,12 @@
 ##
-# $Id: version.rb 6472 2009-04-10 01:44:06Z kris $
+# $Id: version.rb 6482 2009-04-14 16:09:24Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 require 'msf/core'
@@ -23,7 +23,7 @@ class Metasploit3 < Msf::Auxiliary
 			'Description' => %q{
 				Enumerates the version of MySQL servers
 			},
-			'Version'     => '$Revision: 6472 $',
+			'Version'     => '$Revision: 6482 $',
 			'Author'      => 'kris katterjohn',
 			'License'     => MSF_LICENSE
 		)
@@ -66,6 +66,7 @@ class Metasploit3 < Msf::Auxiliary
 		version = data[offset..-1].unpack('Z*')
 
 		print_status("#{rhost}:#{rport} is running MySQL #{version} (protocol #{proto})")
+		report_service(:host => rhost, :port => rport, :name => "mysql")
 	end
 end
 

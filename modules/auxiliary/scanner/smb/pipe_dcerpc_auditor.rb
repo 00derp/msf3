@@ -1,12 +1,12 @@
 ##
-# $Id: pipe_dcerpc_auditor.rb 6401 2009-03-28 05:49:33Z hdm $
+# $Id: pipe_dcerpc_auditor.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -25,7 +25,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'SMB Session Pipe DCERPC Auditor',
-			'Version'     => '$Revision: 6401 $',
+			'Version'     => '$Revision: 6479 $',
 			'Description' => 'Determine what DCERPC services are accessible over a SMB pipe',
 			'Author'      => 'hdm',
 			'License'     => MSF_LICENSE

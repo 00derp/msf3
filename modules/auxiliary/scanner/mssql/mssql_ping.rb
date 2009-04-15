@@ -1,12 +1,12 @@
 ##
-# $Id: mssql_ping.rb 5880 2008-11-11 05:12:52Z hdm $
+# $Id: mssql_ping.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -21,7 +21,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'           => 'MSSQL Ping Utility',
-			'Version'        => '$Revision: 5880 $',
+			'Version'        => '$Revision: 6479 $',
 			'Description'    => 'This module simply queries the MSSQL instance for information.',
 			'Author'         => 'MC',
 			'License'        => MSF_LICENSE

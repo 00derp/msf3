@@ -2,7 +2,7 @@
 # This file is part of the Metasploit Framework and may be subject to
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 require 'msf/core'
@@ -22,7 +22,7 @@ class Metasploit3 < Msf::Auxiliary
 			},
 			'Author'         => [ 'spinbad <spinbad.security[at]googlemail.com>' ],
 			'License'        => MSF_LICENSE,
-			'Version'        => '$Revision: 6341 $',
+			'Version'        => '$Revision: 6479 $',
 			'References'     =>
 				[
 					['OSVDB', '52048'],

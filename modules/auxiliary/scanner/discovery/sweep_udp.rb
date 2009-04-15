@@ -1,12 +1,12 @@
 ##
-# $Id: sweep_udp.rb 6423 2009-03-29 03:24:59Z hdm $
+# $Id: sweep_udp.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -21,7 +21,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'UDP Service Sweeper',
-			'Version'     => '$Revision: 6423 $',
+			'Version'     => '$Revision: 6479 $',
 			'Description' => 'Detect common UDP services',
 			'Author'      => 'hdm',
 			'License'     => MSF_LICENSE

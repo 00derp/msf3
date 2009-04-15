@@ -1,12 +1,12 @@
 ##
-# $Id: wmap_blind_sql_query.rb 5869 2008-11-10 04:38:05Z et $
+# $Id: wmap_blind_sql_query.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 require 'rex/proto/http'
@@ -32,7 +32,7 @@ class Metasploit3 < Msf::Auxiliary
 			},
 			'Author' 		=> [ 'et [at] cyberspace.org' ],
 			'License'		=> BSD_LICENSE,
-			'Version'		=> '$Revision: 5869 $'))   
+			'Version'		=> '$Revision: 6479 $'))   
 			
 		register_options(
 			[

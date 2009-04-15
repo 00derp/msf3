@@ -1,12 +1,12 @@
 ##
-# $Id: bind_ruby.rb 6459 2009-04-03 15:05:35Z kris $
+# $Id: bind_ruby.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 require 'msf/core'
@@ -20,7 +20,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'        => 'Windows Command Shell, Bind TCP (via Ruby)',
-			'Version'     => '$Revision: 6459 $',
+			'Version'     => '$Revision: 6479 $',
 			'Description' => 'Continually listen for a connection and spawn a command shell via Ruby',
 			'Author'      => 'kris katterjohn',
 			'License'     => MSF_LICENSE,

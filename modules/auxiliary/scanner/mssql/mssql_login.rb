@@ -1,12 +1,12 @@
 ##
-# $Id: mssql_login.rb 6152 2009-01-14 17:51:46Z egypt $
+# $Id: mssql_login.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -22,7 +22,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(	
 			'Name'           => 'MSSQL Login Utility',
-			'Version'        => '$Revision: 6152 $',
+			'Version'        => '$Revision: 6479 $',
 			'Description'    => 'This module simply queries the MSSQL instance for a specific user/pass (default is sa with blank).',
 			'Author'         => 'MC',
 			'License'        => MSF_LICENSE

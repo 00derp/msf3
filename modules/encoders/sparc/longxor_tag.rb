@@ -1,12 +1,12 @@
 ##
-# $Id: longxor_tag.rb 5773 2008-10-19 21:03:39Z ramon $
+# $Id: longxor_tag.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -18,7 +18,7 @@ class Metasploit3 < Msf::Encoder::XorAdditiveFeedback
 	def initialize
 		super(
 			'Name'             => 'SPARC DWORD XOR Encoder',
-			'Version'          => '$Revision: 5773 $',
+			'Version'          => '$Revision: 6479 $',
 			'Description'      => %q{
 				This encoder is optyx's 48-byte SPARC encoder with some tweaks.
 			},

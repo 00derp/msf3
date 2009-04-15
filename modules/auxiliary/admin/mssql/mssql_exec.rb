@@ -1,12 +1,12 @@
 ##
-# $Id: mssql_exec.rb 6345 2009-03-15 18:12:33Z kris $
+# $Id: mssql_exec.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 require 'msf/core'
@@ -25,7 +25,7 @@ class Metasploit3 < Msf::Auxiliary
 			},
 			'Author'         => [ 'tebo <tebo [at] attackresearch [dot] com' ],
 			'License'        => MSF_LICENSE,
-			'Version'        => '$Revision: 6345 $',
+			'Version'        => '$Revision: 6479 $',
 			'References'     =>
 				[
 					[ 'URL', 'www.attackresearch.com' ],

@@ -1,12 +1,12 @@
 ##
-# $Id: synflood.rb 6459 2009-04-03 15:05:35Z kris $
+# $Id: synflood.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 require 'msf/core'
@@ -23,7 +23,7 @@ class Metasploit3 < Msf::Auxiliary
 			'Description' => 'A simple TCP SYN flooder',
 			'Author'      => 'kris katterjohn',
 			'License'     => MSF_LICENSE,
-			'Version'     => '$Revision: 6459 $' # 03/13/2009
+			'Version'     => '$Revision: 6479 $' # 03/13/2009
 		)
 
 		register_options([

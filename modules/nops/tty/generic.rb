@@ -1,12 +1,12 @@
 ##
-# $Id: generic.rb 6407 2009-03-28 06:03:35Z hdm $
+# $Id: generic.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -24,7 +24,7 @@ class Metasploit3 < Msf::Nop
 		super(
 			'Name'        => 'TTY Nop Generator',
 			'Alias'       => 'tty_generic',
-			'Version'     => '$Revision: 6407 $',
+			'Version'     => '$Revision: 6479 $',
 			'Description' => 'Generates harmless padding for TTY input',
 			'Author'      => 'hdm',
 			'License'     => MSF_LICENSE,

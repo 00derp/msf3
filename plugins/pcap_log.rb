@@ -1,12 +1,12 @@
 ##
-# $Id: pcap_log.rb 6460 2009-04-07 05:59:38Z egypt $
+# $Id: pcap_log.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 require 'packetfu'

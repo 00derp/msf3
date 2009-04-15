@@ -1,12 +1,12 @@
 ##
-# $Id: ib_service_mgr_info.rb 5880 2008-11-11 05:12:52Z hdm $
+# $Id: ib_service_mgr_info.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -28,7 +28,7 @@ class Metasploit3 < Msf::Auxiliary
 				and implementation of the InterBase server from InterBase
 				Services Manager.
 			},
-			'Version'	=> '$Revision: 5880 $',
+			'Version'	=> '$Revision: 6479 $',
 			'Author'	=>
 				[
 					'Ramon de Carvalho Valle <ramon@risesecurity.org>',

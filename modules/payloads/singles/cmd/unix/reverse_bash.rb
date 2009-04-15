@@ -1,12 +1,12 @@
 ##
-# $Id: reverse_bash.rb 6058 2009-01-02 21:18:51Z egypt $
+# $Id: reverse_bash.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -22,7 +22,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'Unix Command Shell, Reverse TCP (/dev/tcp)',
-			'Version'       => '$Revision: 6058 $',
+			'Version'       => '$Revision: 6479 $',
 			'Description'   => %q{
 				Creates an interactive shell via bash's builtin /dev/tcp.
 				This will not work on most Debian-based Linux distributions

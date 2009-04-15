@@ -1,12 +1,12 @@
 ##
-# $Id: imap.rb 6402 2009-03-28 05:51:18Z hdm $
+# $Id: imap.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -22,7 +22,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'Authentication Capture: IMAP',
-			'Version'     => '$Revision: 6402 $',
+			'Version'     => '$Revision: 6479 $',
 			'Description'    => %q{
 				This module provides a fake IMAP service that
 			is designed to capture authentication credentials.

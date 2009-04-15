@@ -1,12 +1,12 @@
 ##
-# $Id: fakeap.rb 6459 2009-04-03 15:05:35Z kris $
+# $Id: fakeap.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -30,7 +30,7 @@ class Metasploit3 < Msf::Auxiliary
 			
 			'Author'         => [ 'hdm', 'kris katterjohn' ],
 			'License'        => MSF_LICENSE,
-			'Version'        => '$Revision: 6459 $'
+			'Version'        => '$Revision: 6479 $'
 		))			
 
 		register_options([

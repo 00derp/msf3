@@ -1,12 +1,12 @@
 ##
-# $Id: vforkshell_reverse_tcp.rb 6353 2009-03-18 23:28:24Z hdm $
+# $Id: vforkshell_reverse_tcp.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -23,7 +23,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'OSX (vfork) Command Shell, Reverse TCP Inline',
-			'Version'       => '$Revision: 6353 $',
+			'Version'       => '$Revision: 6479 $',
 			'Description'   => 'Connect back to attacker, vfork if necessary, and spawn a command shell',
 			'Author'        => 'Dino Dai Zovi <ddz@theta44.org>',
 			'License'       => MSF_LICENSE,

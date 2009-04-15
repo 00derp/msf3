@@ -2,7 +2,7 @@
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -19,7 +19,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'Reverse TCP Stager',
-			'Version'       => '$Revision: 5773 $',
+			'Version'       => '$Revision: 6479 $',
 			'Description'   => 'Connect back to the attacker',
 			'Author'        => 'toto',
 			'License'       => MSF_LICENSE,

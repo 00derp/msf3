@@ -1,12 +1,12 @@
 ##
-# $Id: interact.rb 6120 2009-01-11 06:09:02Z druid $
+# $Id: interact.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -22,7 +22,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'Unix Command, Interact with established connection',
-			'Version'       => '$Revision: 6120 $',
+			'Version'       => '$Revision: 6479 $',
 			'Description'   => 'Interacts with a shell on an established socket connection',
 			'Author'        => 'hdm',
 			'License'       => MSF_LICENSE,

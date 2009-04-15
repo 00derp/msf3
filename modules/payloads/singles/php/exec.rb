@@ -1,12 +1,12 @@
 ##
-# $Id: exec.rb 5783 2008-10-23 02:43:21Z ramon $
+# $Id: exec.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -24,7 +24,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'PHP Execute Command ',
-			'Version'       => '$Revision: 5783 $',
+			'Version'       => '$Revision: 6479 $',
 			'Description'   => 'Execute a single shell command',
 			'Author'        => [ 'egypt <egypt@metasploit.com>' ],
 			'License'       => BSD_LICENSE,

@@ -1,12 +1,12 @@
 ##
-# $Id: shell_findsock.rb 6231 2009-02-17 06:04:02Z egypt $
+# $Id: shell_findsock.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -25,7 +25,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'PHP Command Shell, Find Port',
-			'Version'       => '$Revision: 6231 $',
+			'Version'       => '$Revision: 6479 $',
 			'Description'   => %Q{
 				Spawn a shell on the established connection to
 				the webserver.  Unfortunately, this payload

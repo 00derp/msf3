@@ -1,12 +1,12 @@
 ##
-# $Id: ms06_019_exchange.rb 5984 2008-11-28 21:04:28Z ramon $
+# $Id: ms06_019_exchange.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -28,7 +28,7 @@ class Metasploit3 < Msf::Auxiliary
 			},
 			'Author'         => [ 'pusscat' ],
 			'License'        => MSF_LICENSE,
-			'Version'        => '$Revision: 5984 $',
+			'Version'        => '$Revision: 6479 $',
 			'References'     =>
 				[
 					[ 'BID', '17908'],

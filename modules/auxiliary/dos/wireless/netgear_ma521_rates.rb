@@ -1,12 +1,12 @@
 ##
-# $Id: netgear_ma521_rates.rb 5949 2008-11-18 20:00:31Z hdm $
+# $Id: netgear_ma521_rates.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 

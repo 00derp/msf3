@@ -3,7 +3,7 @@
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -22,7 +22,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'HTTP SSL Certificate tester',
-			'Version'     => '$Revision: 6449 $',
+			'Version'     => '$Revision: 6479 $',
 			'Description' => 'Display vhost associated to server using SSL certificate and check for signature algorithm',
 			'Author'      => 'et',
 			'License'     => MSF_LICENSE

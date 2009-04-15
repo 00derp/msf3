@@ -1,12 +1,12 @@
 ##
-# $Id: shell_bind_tcp.rb 5773 2008-10-19 21:03:39Z ramon $
+# $Id: shell_bind_tcp.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -23,7 +23,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'OSX Command Shell, Bind TCP Inline',
-			'Version'       => '$Revision: 5773 $',
+			'Version'       => '$Revision: 6479 $',
 			'Description'   => 'Listen for a connection and spawn a command shell',
 			'Author'        => 'Ramon de Carvalho Valle <ramon@risesecurity.org>',
 			'License'       => MSF_LICENSE,

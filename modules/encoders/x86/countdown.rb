@@ -1,12 +1,12 @@
 ##
-# $Id: countdown.rb 5773 2008-10-19 21:03:39Z ramon $
+# $Id: countdown.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -18,7 +18,7 @@ class Metasploit3 < Msf::Encoder::Xor
 	def initialize
 		super(
 			'Name'             => 'Single-byte XOR Countdown Encoder',
-			'Version'          => '$Revision: 5773 $',
+			'Version'          => '$Revision: 6479 $',
 			'Description'      => %q{
 				This encoder uses the length of the payload as a position-dependent
 				encoder key to produce a small decoder stub.

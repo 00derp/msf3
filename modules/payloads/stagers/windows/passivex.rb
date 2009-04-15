@@ -1,12 +1,12 @@
 ##
-# $Id: passivex.rb 5773 2008-10-19 21:03:39Z ramon $
+# $Id: passivex.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -22,7 +22,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'PassiveX Reverse HTTP Tunneling Stager',
-			'Version'       => '$Revision: 5773 $',
+			'Version'       => '$Revision: 6479 $',
 			'Description'   => 'Tunnel communication over HTTP using IE 6',
 			'Author'        => 'skape',
 			'License'       => MSF_LICENSE,

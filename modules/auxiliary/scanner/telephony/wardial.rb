@@ -2,7 +2,7 @@
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 require 'msf/core'
@@ -44,7 +44,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'Wardialer',
-			'Version'     => '$Revision: 6443 $',
+			'Version'     => '$Revision: 6479 $',
 			'Description' => 'Scan for dial-up systems that are connected to modems and answer telephony indials.',
 			'Author'      => [ 'I)ruid' ],
 			'License'     => MSF_LICENSE

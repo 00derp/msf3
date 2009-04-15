@@ -1,12 +1,12 @@
 ##
-# $Id: shell_reverse_tcp.rb 5902 2008-11-13 02:06:17Z ramon $
+# $Id: shell_reverse_tcp.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -23,7 +23,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'Linux Command Shell, Reverse TCP Inline',
-			'Version'       => '$Revision: 5902 $',
+			'Version'       => '$Revision: 6479 $',
 			'Description'   => 'Connect back to attacker and spawn a command shell',
 			'Author'        => 'Ramon de Carvalho Valle <ramon@risesecurity.org>',
 			'License'       => MSF_LICENSE,

@@ -1,12 +1,12 @@
 ##
-# $Id: open_x11.rb 6438 2009-03-30 01:01:30Z kris $
+# $Id: open_x11.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 require 'msf/core'
@@ -20,7 +20,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'		=> 'X11 No-Auth Scanner',
-			'Version'	=> '$Revision: 6438 $',
+			'Version'	=> '$Revision: 6479 $',
 			'Description'	=> %q{
 				This module scans for X11 servers that allow anyone
 				to connect without authentication.

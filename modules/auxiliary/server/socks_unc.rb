@@ -1,12 +1,12 @@
 ##
-# $Id: socks_unc.rb 5958 2008-11-19 06:58:01Z egypt $
+# $Id: socks_unc.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -22,7 +22,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'SOCKS Proxy UNC Path Redirection',
-			'Version'     => '$Revision: 5958 $',
+			'Version'     => '$Revision: 6479 $',
 			'Description'    => %q{
 				This module provides a Socks proxy service
 			that redirects all HTTP requests to a web page that

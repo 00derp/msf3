@@ -1,12 +1,12 @@
 ##
-# $Id: base64.rb 5783 2008-10-23 02:43:21Z ramon $
+# $Id: base64.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -18,7 +18,7 @@ class Metasploit3 < Msf::Encoder
 	def initialize
 		super(
 			'Name'             => 'PHP Base64 encoder',
-			'Version'          => '$Revision: 5783 $',
+			'Version'          => '$Revision: 6479 $',
 			'Description'      => %q{
 				This encoder returns a base64 string encapsulated in
 				eval(base64_decode()), increasing the size by roughly one

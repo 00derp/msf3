@@ -2,7 +2,7 @@
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -17,7 +17,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'Tomcat Administration Tool default access',
-			'Version'     => '$Revision: 6407 $',
+			'Version'     => '$Revision: 6479 $',
 			'Description' => 'Detect Tomcat Administration Tool default access.',
 			'References'  =>
 				[

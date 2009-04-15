@@ -1,12 +1,12 @@
 ##
-# $Id: endpoint_mapper.rb 6022 2008-12-19 07:11:08Z kris $
+# $Id: endpoint_mapper.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -24,7 +24,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'Endpoint Mapper Service Discovery',
-			'Version'     => '$Revision: 6022 $',
+			'Version'     => '$Revision: 6479 $',
 			'Description' => %q{
 				This module can be used to obtain information from the 
 				Endpoint Mapper service.

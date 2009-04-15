@@ -1,12 +1,12 @@
 ##
-# $Id: isight.rb 6353 2009-03-18 23:28:24Z hdm $
+# $Id: isight.rb 6479 2009-04-13 14:33:26Z kris $
 ##
 
 ##
 # This file is part of the Metasploit Framework and may be subject to 
 # redistribution and commercial restrictions. Please see the Metasploit
 # Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/projects/Framework/
+# http://metasploit.com/framework/
 ##
 
 
@@ -28,7 +28,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(update_info(info,
 			'Name'          => 'Mac OS X x86 iSight photo capture',
-			'Version'       => '$Revision: 6353 $',
+			'Version'       => '$Revision: 6479 $',
 			'Description'   => 'Inject a Mach-O bundle to capture a photo from the iSight',
 			'Author'        => [ 'Dino Dai Zovi <ddz@theta44.org' ],
 			'License'       => MSF_LICENSE,
