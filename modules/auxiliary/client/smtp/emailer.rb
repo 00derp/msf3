@@ -27,7 +27,7 @@ class Metasploit3 < Msf::Auxiliary
 			engineering.
 			},
 			'License'        => MSF_LICENSE,
-			'Version'        => '$Revision: 6479 $',
+			'Version'        => '$Revision: 6490 $',
 			'References'     =>
 				[
 					[ 'URL', 'http://spl0it.org/' ],
@@ -105,7 +105,7 @@ class Metasploit3 < Msf::Auxiliary
 
 			mime_msg.from = from
 			mime_msg.to = email
-			datastore['MAILTO'] = email
+			datastore['MAILTO'] = email.chomp
 			mime_msg.subject = subject
 			
 			mime_msg.add_part(Rex::Text.encode_base64(email_msg_body, "\r\n"), type, "base64", "inline")
@@ -117,7 +117,8 @@ class Metasploit3 < Msf::Auxiliary
 				end
 			end
 			
-			send_message(mime_msg.to_s)		
+			send_message(mime_msg.to_s)
+			sleep wait		
 		end
 	
 		print_status("Email sent..")

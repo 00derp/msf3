@@ -1,5 +1,5 @@
 ##
-# $Id: bind_php.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: bind_php.rb 6491 2009-04-18 23:51:20Z egypt $
 ##
 
 ##
@@ -24,8 +24,8 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'PHP Command Shell, Bind TCP (via php)',
-			'Version'       => '$Revision: 6479 $',
-			'Description'   => 'Listen for a connection and spawn a command shell via php (persistent)',
+			'Version'       => '$Revision: 6491 $',
+			'Description'   => 'Listen for a connection and spawn a command shell via php',
 			'Author'        => ['egypt', 'diaul <diaul@devilopers.org>',],
 			'License'       => BSD_LICENSE,
 			'Platform'      => 'php',
