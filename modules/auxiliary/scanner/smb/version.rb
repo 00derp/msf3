@@ -1,5 +1,5 @@
 ##
-# $Id: version.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: version.rb 6494 2009-04-21 05:59:46Z egypt $
 ##
 
 ##
@@ -22,6 +22,7 @@ class Metasploit3 < Msf::Auxiliary
 	
 	# Scanner mixin should be near last
 	include Msf::Auxiliary::Scanner
+	include Msf::Auxiliary::Report
 
 	# Aliases for common classes
 	SIMPLE = Rex::Proto::SMB::SimpleClient
@@ -32,7 +33,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'SMB Version Detection',
-			'Version'     => '$Revision: 6479 $',
+			'Version'     => '$Revision: 6494 $',
 			'Description' => 'Display version information about each system',
 			'Author'      => 'hdm',
 			'License'     => MSF_LICENSE
@@ -54,6 +55,20 @@ class Metasploit3 < Msf::Auxiliary
 			
 			if(res['os'] and res['os'] != 'Unknown')
 				print_status("#{rhost} is running #{res['os']} #{res['sp']} (language: #{res['lang']})")
+				report_service(:host => ip, :port => info[0])
+				case res['os']
+				when /Windows/
+					os = OperatingSystems::WINDOWS
+				else
+					os = OperatingSystems::UNKNOWN
+				end
+				report_host({
+					:host => ip, 
+					:os_flavor => res['os'], 
+					:os_lang => res['lang'],
+					:os_name => os, 
+					:os_sp => res['sp'],
+				})
 			else
 				print_status("#{rhost} could not be identified")
 			end
