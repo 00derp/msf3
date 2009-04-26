@@ -1,0 +1,63 @@
+s_string_variable("doug");
+s_string_variable("^^");
+
+s_string_variable("Ar");
+s_string_variable("1111111");
+s_string_variable("\n");
+
+s_string_variable("^^");
+s_string_variable("Ac");
+s_string_variable("doug");
+s_string_variable("\n");
+
+// buy a drug
+s_string_variable("^AT");
+s_string_variable("drug");
+s_string_variable("^");
+s_string_variable("5");
+s_string_variable("^");
+s_string_variable("1");
+s_string_variable("\n");
+
+// make a deposit
+s_string_variable("^AY");
+s_string_variable("100");
+s_string_variable("\n");
+
+// say yes
+s_string_variable("^AX");
+s_string_variable("\n");
+
+// done
+s_string_variable("^AU");
+s_string_variable("\n");
+
+// fightact
+s_string_variable("^An");
+s_string_variable("F");
+s_string_variable("\n");
+
+// jet
+// Program received signal SIGSEGV, Segmentation fault.
+// [Switching to Thread 0xb74916c0 (LWP 30638)]
+// 0x08062f6e in HandleServerMessage (buf=0x8098828 "", Play=0x809a000) at
+// serverside.c:525
+// 525           dopelog(4, LF_SERVER, "%s jets to %s",
+s_string_variable("^AV");
+s_string_variable("65536");
+s_string_variable("\n");
+
+// send global message
+s_string_variable("^AE");
+s_string_variable("hello world");
+s_string_variable("\n");
+
+// spy on
+s_string_variable("1");
+s_string_variable("^Af");
+s_string_variable("\n");
+
+// tipoff
+s_string_variable("1");
+s_string_variable("^Ae");
+s_string_variable("\n");
