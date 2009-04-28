@@ -56,7 +56,8 @@ class IRC
                 puts "[ EVAL #{$5} from #{$1}!#{$2}@#{$3} ]"
                 send "PRIVMSG #{(($4==@nick)?$1:$4)} :#{evaluate($5)}"
             else
-                puts s
+                #puts s
+                # IO.popen(cmd,"r"){|io|c.print io.read}
         end
     end
     def main_loop()
