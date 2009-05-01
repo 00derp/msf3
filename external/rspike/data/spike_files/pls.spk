@@ -5,7 +5,7 @@ s_string("\n");
 s_string("\n");
 
 s_string("File1=");
-s_string_variable("/home/doug/music/foo.mp3");
+s_string_variable("foo.mp3");
 s_string("\n");
 s_string("Title1=");
 s_string_variable("title");
