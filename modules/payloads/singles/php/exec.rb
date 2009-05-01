@@ -1,5 +1,5 @@
 ##
-# $Id: exec.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: exec.rb 6512 2009-04-30 06:12:27Z egypt $
 ##
 
 ##
@@ -24,9 +24,9 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'PHP Execute Command ',
-			'Version'       => '$Revision: 6479 $',
-			'Description'   => 'Execute a single shell command',
-			'Author'        => [ 'egypt <egypt@metasploit.com>' ],
+			'Version'       => '$Revision: 6512 $',
+			'Description'   => 'Execute a single system command',
+			'Author'        => [ 'egypt' ],
 			'License'       => BSD_LICENSE,
 			'Platform'      => 'php',
 			'Arch'          => ARCH_PHP
@@ -47,7 +47,7 @@ module Metasploit3
 		#{php_system_block({:cmd_varname=>"$c", :disabled_varname => dis})}
 		END_OF_PHP_CODE
 		
-		return shell
+		return Rex::Text.compress(shell)
 	end
 
 	#

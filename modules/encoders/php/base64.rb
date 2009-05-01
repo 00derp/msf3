@@ -1,5 +1,5 @@
 ##
-# $Id: base64.rb 6492 2009-04-19 02:31:34Z egypt $
+# $Id: base64.rb 6511 2009-04-30 06:11:56Z egypt $
 ##
 
 ##
@@ -18,7 +18,7 @@ class Metasploit3 < Msf::Encoder
 	def initialize
 		super(
 			'Name'             => 'PHP Base64 encoder',
-			'Version'          => '$Revision: 6492 $',
+			'Version'          => '$Revision: 6511 $',
 			'Description'      => %q{
 				This encoder returns a base64 string encapsulated in
 				eval(base64_decode()), increasing the size by a bit more than
@@ -76,6 +76,11 @@ class Metasploit3 < Msf::Encoder
 		# parse errors on the server side, so do the same for them.
 		b64.gsub!("+", ".chr(43).")
 		b64.gsub!("/", ".chr(47).")
+		# In the case where a plus or slash happened at the end of a chunk,
+		# we'll have two dots next to each other, so fix it up.  Note that this
+		# is searching for literal dots, not a regex matching any two
+		# characters
+		b64.gsub!("..", ".")
 
 		
 		return "eval(base64_decode(" + b64 + "));"

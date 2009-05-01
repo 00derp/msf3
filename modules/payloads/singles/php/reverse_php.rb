@@ -1,5 +1,5 @@
 ##
-# $Id: reverse_php.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: reverse_php.rb 6510 2009-04-30 06:10:12Z egypt $
 ##
 
 ##
@@ -24,9 +24,9 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'PHP Command Shell, Reverse TCP (via php)',
-			'Version'       => '$Revision: 6479 $',
+			'Version'       => '$Revision: 6510 $',
 			'Description'   => 'Reverse PHP connect back shell with checks for disabled functions',
-			'Author'        => 'egypt <egypt@nmt.edu>',
+			'Author'        => 'egypt',
 			'License'       => BSD_LICENSE,
 			'Platform'      => 'php',
 			'Arch'          => ARCH_PHP,
