@@ -1,0 +1,42 @@
+s_string_variable("Ar");
+s_string_variable("1111111");
+s_string("\n");
+
+s_string_variable("^Ak1.5.12^8^4^12^bitch^bitches^gun^guns^drug^drugs^%m-%d-%Y^0^theLoan Shark^the Bank^Dan's House of Guns^the pub^1$^");
+s_string("\n");
+
+s_string_variable("^Al0^D20000^10000^");
+s_string("\n");
+
+s_string_variable("^Al0^CBaretta^3000^4^5^");
+s_string("\n");
+
+s_string_variable("^Al1^C.38 Special^3500^4^9^");
+s_string("\n");
+
+s_string_variable("^Al2^CRuger^2900^4^4^");
+s_string("\n");
+
+s_string_variable("^Al3^CSaturday Night Special^3100^4^7^");
+s_string("\n");
+
+s_string_variable("^Al0^BAcid^1000^4400^");
+s_string("\n");
+
+s_string_variable("^Al1^BCocaine^15000^29000^");
+s_string("\n");
+
+s_string_variable("^Al2^BHashish^480^1280^");
+s_string("\n");
+
+s_string_variable("^Al3^BHeroin^5500^13000^");
+s_string("\n");
+
+s_string_variable("^Al4^BLudes^11^60^");
+s_string("\n");
+
+s_string_variable("^Al5^BMDA^1500^4400^");
+s_string("\n");
+
+s_string_variable("^Al6^BOpium^540^1250^");
+s_string("\n");
