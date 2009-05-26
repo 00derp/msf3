@@ -1,5 +1,5 @@
 ##
-# $Id: mssql_sql.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: mssql_sql.rb 6571 2009-05-21 23:32:15Z egypt $
 ##
 
 ##
@@ -25,7 +25,7 @@ class Metasploit3 < Msf::Auxiliary
 			},
 			'Author'         => [ 'tebo <tebo [at] attackresearch [dot] com>' ],
 			'License'        => MSF_LICENSE,
-			'Version'        => '$Revision: 6479 $',
+			'Version'        => '$Revision: 6571 $',
 			'References'     =>
 				[
 					[ 'URL', 'www.attackresearch.com' ],
@@ -42,7 +42,7 @@ class Metasploit3 < Msf::Auxiliary
 
 	def run
 		connect
-		if mssql_login
+		if mssql_login(datastore['MSSQL_USER'], datastore['MSSQL_PASS'])
 			query = datastore['SQL']
 			res = sql_query(query)
 		end

@@ -1,5 +1,5 @@
 ##
-# $Id: wmap_soap_xml.rb 6495 2009-04-23 03:16:29Z patrickw $
+# $Id: wmap_soap_xml.rb 6563 2009-05-18 18:02:21Z hdm $
 ##
 
 ##
@@ -31,7 +31,7 @@ class Metasploit3 < Msf::Auxiliary
 			},
 			'Author' 		=> [ 'patrick' ],
 			'License'		=> MSF_LICENSE,
-			'Version'		=> '$Revision: 6495 $'))   
+			'Version'		=> '$Revision: 6563 $'))   
 			
 		register_options(
 			[
@@ -107,7 +107,7 @@ class Metasploit3 < Msf::Auxiliary
 			]
 
 		target_port = datastore['RPORT']
-		vhost = datastore['VHOST'] || datastore['RHOST'] || target_host
+		vhost = datastore['VHOST'] || wmap_target_host || ip
 
 		begin
 			# Check service exists

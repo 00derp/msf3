@@ -22,7 +22,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'HTTP SSL Certificate tester',
-			'Version'     => '$Revision: 6479 $',
+			'Version'     => '$Revision: 6564 $',
 			'Description' => 'Display vhost associated to server using SSL certificate and check for signature algorithm',
 			'Author'      => 'et',
 			'License'     => MSF_LICENSE
@@ -40,7 +40,8 @@ class Metasploit3 < Msf::Auxiliary
 		begin
 			ssock = Rex::Socket::SslTcp.create(
 				'PeerHost' => wmap_target_host,
-				'PeerPort' => wmap_target_port
+				'PeerPort' => wmap_target_port,
+				'Proxies'  => datastore['PROXIES'] 	
 			)
 
 			cert  = OpenSSL::X509::Certificate.new(ssock.peer_cert)
