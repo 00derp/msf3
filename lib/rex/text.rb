@@ -34,7 +34,7 @@ module Text
 	Numerals     = "0123456789"
 	Alpha        = UpperAlpha + LowerAlpha
 	AlphaNumeric = Alpha + Numerals
-	HighAscii    = (0x80 .. 0xff).map { |b| [b].pack('C') }.to_s
+	HighAscii    = [*(0x80 .. 0xff)].pack("C*")
 	DefaultWrap  = 60
 	AllChars	 = 	
 		"\xff\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c" +
@@ -584,6 +584,41 @@ module Text
 	#
 	##
 	
+	def self.to_executable(arch, plat, code, note='')
+		if (arch.index(ARCH_X86))
+
+			if (plat.index(Msf::Module::Platform::Windows))
+				return Rex::Text.to_win32pe(code, note)
+			end
+
+			if (plat.index(Msf::Module::Platform::Linux))
+				return Rex::Text.to_linux_x86_elf(code, note)
+			end
+			
+			if(plat.index(Msf::Module::Platform::OSX))
+				return Rex::Text.to_osx_x86_macho(code, note)		
+			end	
+			
+			# XXX: Add remaining x86 systems here					
+		end
+
+		if(arch.index(ARCH_ARMLE))
+			if(plat.index(Msf::Module::Platform::OSX))
+				return Rex::Text.to_osx_arm_macho(code, note)		
+			end
+			# XXX: Add Linux here
+		end
+
+		if(arch.index(ARCH_PPC))
+			if(plat.index(Msf::Module::Platform::OSX))
+				return Rex::Text.to_osx_ppc_macho(code, note)	
+			end
+			# XXX: Add PPC OS X and Linux here			
+		end						
+		nil
+	end
+
+	
 	def self.to_win32pe(code = "\xcc", note="")
 		pe = ''
 
@@ -1025,8 +1060,8 @@ module Text
 	# nil if there wasn't any badchar occurences.
 	#
 	def self.badchar_index(data, badchars = '')
-		badchars.each_byte { |badchar|
-			pos = data.index(badchar)
+		badchars.unpack("C*") { |badchar|
+			pos = data.index(badchar.chr)
 			return pos if pos
 		}
 		return nil

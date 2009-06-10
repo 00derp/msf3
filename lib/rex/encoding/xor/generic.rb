@@ -120,7 +120,7 @@ class Generic
 		pos     = 0
 
 		while pos < buf.length
-			encoded += (buf[pos] ^ key[pos % len]).chr
+			encoded += (buf[pos,1].unpack("C*")[0] ^ key[pos % len, 1].unpack("C*")[0]).chr
 			key = _encode_mutate_key(buf, key, pos, len)
 			pos += 1
 		end

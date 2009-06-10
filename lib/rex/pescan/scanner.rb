@@ -21,6 +21,9 @@ module Scanner
 				hits = scan_section(section, param)
 				hits.each do |hit|
 					vma  = pe.rva_to_vma(hit[0])
+					
+					next if (param['filteraddr'] and [vma].pack("V").reverse !~ /#{param['filteraddr']}/)
+					
 					msg  = hit[1].is_a?(Array) ? hit[1].join(" ") : hit[1]
 					$stdout.puts pe.ptr_s(vma) + " " + msg
 					if(param['disasm'])
@@ -65,14 +68,15 @@ module Scanner
 		end
 
 		def _ret_size(section, index)
-			case section.read(index, 1)
+			d = section.read(index, 1)
+			case d
 				when "\xc3"
 					return 1
 				when "\xc2"
 					return 3
 			end
 
-			raise "wtf"
+			raise RuntimeError, "invalid return opcode"
 		end
 
 		def _parse_ret(data)
@@ -95,10 +99,10 @@ module Scanner
 
 				parse_ret = false
 
-				byte1 = section.read(index, 1)[0]
+				byte1 = section.read(index, 1).unpack("C*")[0]
 
 				if byte1 == 0xff
-					byte2   = section.read(index+1, 1)[0]
+					byte2   = section.read(index+1, 1).unpack("C*")[0]
 					regname = Rex::Arch::X86.reg_name32(byte2 & 0x7)
 
 					case byte2 & 0xf8
@@ -147,8 +151,8 @@ module Scanner
 				message = ''
 
 				pops = section.read(index, 2)
-				reg1 = Rex::Arch::X86.reg_name32(pops[0] & 0x7)
-				reg2 = Rex::Arch::X86.reg_name32(pops[1] & 0x7)
+				reg1 = Rex::Arch::X86.reg_name32(pops[0,1].unpack("C*")[0] & 0x7)
+				reg2 = Rex::Arch::X86.reg_name32(pops[1,1].unpack("C*")[0] & 0x7)
 
 				message = "pop #{reg1}; pop #{reg2}; "
 

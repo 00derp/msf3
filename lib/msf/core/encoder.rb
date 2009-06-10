@@ -263,6 +263,7 @@ class Encoder < Module
 	# initialized and is ready to go.
 	#
 	def do_encode(state)
+	
 		# Copy the decoder stub since we may need to modify it
 		stub = decoder_stub(state).dup
 
@@ -441,7 +442,7 @@ protected
 			# Scan each byte and see what we've got going on to make sure
 			# no funny business is happening
 			key_bytes.each { |byte|
-				if (badchars.index(byte) != nil)
+				if (badchars.index(byte.chr) != nil)
 					found = false
 				end
 			}
@@ -507,7 +508,7 @@ protected
 							# no funny business is happening with the address
 							invalid_key = false
 							address_bytes.each { |byte|
-								if badchars.index(byte)
+								if badchars.index(byte.chr)
 									invalid_key = true
 								end
 							}
@@ -556,7 +557,7 @@ protected
 	#
 	def has_badchars?(buf, badchars)
 		badchars.each_byte { |badchar|
-			idx = buf.index(badchar)
+			idx = buf.index(badchar.chr)
 
 			if (idx != nil)
 				return idx
@@ -578,7 +579,7 @@ protected
 	# Convert individual key bytes into a byte buffer
 	#
 	def key_bytes_to_buffer(key_bytes)
-		return key_bytes.pack('C' + decoder_key_size.to_s)
+		return key_bytes.pack('C*')[0, decoder_key_size]
 	end
 
 	#
@@ -586,7 +587,7 @@ protected
 	# decoder's key size and packing requirements
 	#
 	def integer_to_key_bytes(integer)
-		return [ integer.to_i ].pack(decoder_key_pack).unpack('C' + decoder_key_size.to_s)
+		return [ integer.to_i ].pack(decoder_key_pack).unpack('C*')[0, decoder_key_size]
 	end
 
 	#
