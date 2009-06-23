@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-# $Id: section.rb 5773 2008-10-19 21:03:39Z ramon $
+# $Id: section.rb 6686 2009-06-20 17:53:53Z hdm $
 
 require 'rex/peparsey/exceptions'
 require 'rex/peparsey/pebase'
@@ -42,6 +42,24 @@ class Section
 		_section_header.v['Name'].gsub(/\x00+$/, '')
 	end
 
+	def flags
+		# a section header is not required
+		return nil if !_section_header
+		_section_header.v['Characteristics']
+	end
+	
+	def vma
+		# a section header is not required
+		return nil if !_section_header
+		_section_header.v['VirtualAddress']
+	end
+
+	def raw_size
+		# a section header is not required
+		return nil if !_section_header
+		_section_header.v['SizeOfRawData']
+	end		
+	
 	def _check_offset(offset, len = 1)
 		if offset < 0 || offset+len > size
 			raise BoundsError, "Offset #{offset} outside of section", caller

@@ -1,5 +1,5 @@
 ##
-# $Id: version.rb 6494 2009-04-21 05:59:46Z egypt $
+# $Id: version.rb 6675 2009-06-20 02:43:56Z hdm $
 ##
 
 ##
@@ -33,7 +33,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'SMB Version Detection',
-			'Version'     => '$Revision: 6494 $',
+			'Version'     => '$Revision: 6675 $',
 			'Description' => 'Display version information about each system',
 			'Author'      => 'hdm',
 			'License'     => MSF_LICENSE
@@ -44,7 +44,7 @@ class Metasploit3 < Msf::Auxiliary
 
 	# Fingerprint a single host
 	def run_host(ip)	
-		[[139, false], [445, true]].each do |info|
+		[[445, true], [139, false]].each do |info|
 
 		datastore['RPORT'] = info[0]
 		datastore['SMBDirect'] = info[1]

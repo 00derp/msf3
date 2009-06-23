@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-# $Id: scanner.rb 6615 2009-06-03 01:39:54Z hdm $
+# $Id: scanner.rb 6659 2009-06-14 20:18:38Z hdm $
 
 module Rex
 module ElfScan
@@ -152,8 +152,8 @@ class PopPopRetScanner < JmpRegScanner
 			message = ''
 
 			pops = elf.read(offset, 2)
-			reg1 = Rex::Arch::X86.reg_name32(pops[0] & 0x7)
-			reg2 = Rex::Arch::X86.reg_name32(pops[1] & 0x7)
+			reg1 = Rex::Arch::X86.reg_name32(pops[0,1].unpack('C*')[0] & 0x7)
+			reg2 = Rex::Arch::X86.reg_name32(pops[1,1].unpack('C*')[0] & 0x7)
 
 			message = "pop #{reg1}; pop #{reg2}; "
 

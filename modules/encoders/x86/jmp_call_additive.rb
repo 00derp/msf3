@@ -1,5 +1,5 @@
 ##
-# $Id: jmp_call_additive.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: jmp_call_additive.rb 6661 2009-06-14 21:30:56Z hdm $
 ##
 
 ##
@@ -36,7 +36,7 @@ class Metasploit3 < Msf::Encoder::XorAdditiveFeedback
 	def initialize
 		super(
 			'Name'             => 'Polymorphic Jump/Call XOR Additive Feedback Encoder',
-			'Version'          => '$Revision: 6479 $',
+			'Version'          => '$Revision: 6661 $',
 			'Description'      => 'Polymorphic Jump/Call XOR Additive Feedback',
 			'Author'           => 'skape',
 			'Arch'             => ARCH_X86,

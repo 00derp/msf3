@@ -175,7 +175,7 @@ function create_window_ajax(target_url, wid, wtitle, wwidth, wheight) {
 		height:wheight,
 		resizable: true,
 		draggable: true,
-		url: target_url,
+		url:target_url,
 		showEffect: Element.show,
 		hideEffect: Element.hide
 	});

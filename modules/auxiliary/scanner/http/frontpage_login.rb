@@ -18,7 +18,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'FrontPage Server Extensions Login Utility',
-			'Version'     => '$Revision: 6479 $',
+			'Version'     => '$Revision: 6691 $',
 			'Description' => 'This module queries the FrontPage Server Extensions and determines whether anonymous access is allowed.',
 			'References'  =>
 				[
@@ -62,14 +62,14 @@ class Metasploit3 < Msf::Auxiliary
 					fpauthor = $1
 					print_status("#{info}FrontPage Author: #{info}#{fpauthor}")
 				end
-				check_account(info, fpversion)
+				check_account(info, fpversion, target_host)
 			end
 		else
 			print_status("#{info} may not support FrontPage Server Extensions")
 		end
 	end
 
-	def check_account(info, fpversion)
+	def check_account(info, fpversion, target_host)
 
 		return if not fpversion 
 

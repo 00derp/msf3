@@ -1,3 +1,4 @@
+
 /* 
  * Copyright (c) 2006 LMH <lmh[at]info-pull.com>
  * Added to Metasploit under the terms of the Metasploit Framework License v1.2
@@ -36,7 +37,7 @@ var cmd_internal =
 	},
 	detach:function() {
 		console_printline(">> Detaching from any active session...\n");
-		new Ajax.Updater("console_update", document.location, {
+		new Ajax.Updater("console_update", document.location.toString(), {
 			asynchronous:true,
 			evalScripts:true,
 			parameters:"special=detach"
@@ -44,7 +45,7 @@ var cmd_internal =
 	},
 	kill:function() {
 		console_printline(">> Killing any active session...\n");	
-		new Ajax.Updater("console_update", document.location, {
+		new Ajax.Updater("console_update", document.location.toString(), {
 			asynchronous:true,
 			evalScripts:true,
 			parameters:"special=kill"
@@ -77,12 +78,12 @@ function console_refocus() {
 }
 
 function console_read() {
-	new Ajax.Updater("console_update", document.location, {
+	new Ajax.Updater("console_update", document.location.toString(), {
 		asynchronous:true,
 		evalScripts:true,
 		parameters:"read=yes",
 		onComplete:console_read_output
-	});	
+	});
 }
 
 
@@ -176,7 +177,7 @@ function console_keypress(e) {
 				
 		status_busy();
 		
-		new Ajax.Updater("console_update", document.location, {
+		new Ajax.Updater("console_update", document.location.toString(), {
 			asynchronous:true,
 			evalScripts:true,
 			parameters:"read=yes&cmd=" + escape(console_input.value),
@@ -216,7 +217,7 @@ function console_keydown(e) {
 		
 		status_busy();
 					
-		new Ajax.Updater("console_update", document.location, {
+		new Ajax.Updater("console_update", document.location.toString(), {
 			asynchronous:true,
 			evalScripts:true,
 			parameters:"read=yes&tab=" + escape(console_input.value),

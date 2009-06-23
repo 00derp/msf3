@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-# $Id: pebase.rb 5773 2008-10-19 21:03:39Z ramon $
+# $Id: pebase.rb 6686 2009-06-20 17:53:53Z hdm $
 
 require 'rex/peparsey/exceptions'
 require 'rex/struct2'
@@ -627,7 +627,10 @@ class PeBase
 	  [ 'uint32v', 'VirtualAddress',         0 ],
 	  [ 'uint32v', 'SizeOfRawData',          0 ],
 	  [ 'uint32v', 'PointerToRawData',       0 ],
-	  [ 'uint32v', 'PointerToRelocations',   0 ]
+	  [ 'uint32v', 'PointerToRelocations',   0 ],
+	  [ 'uint32v', 'NumberOfRelocations',    0 ],
+	  [ 'uint32v', 'NumberOfLineNumbers',    0 ],
+	  [ 'uint32v', 'Characteristics',        0 ]
 	)
 
 	class SectionHeader < GenericHeader
