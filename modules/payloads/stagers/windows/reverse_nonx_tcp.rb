@@ -1,5 +1,5 @@
 ##
-# $Id: reverse_nonx_tcp.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: reverse_nonx_tcp.rb 6706 2009-06-24 01:31:16Z hdm $
 ##
 
 ##
@@ -26,8 +26,8 @@ module Metasploit3
 	
 	def initialize(info = {})
 		super(merge_info(info,
-			'Name'          => 'Reverse TCP Stager (No NX Support)',
-			'Version'       => '$Revision: 6479 $',
+			'Name'          => 'Reverse TCP Stager (No NX or Win7)',
+			'Version'       => '$Revision: 6706 $',
 			'Description'   => 'Connect back to the attacker (No NX)',
 			'Author'        => 'vlad902',
 			'License'       => MSF_LICENSE,

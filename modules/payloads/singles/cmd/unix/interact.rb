@@ -1,5 +1,5 @@
 ##
-# $Id: interact.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: interact.rb 6854 2009-07-21 15:20:35Z hdm $
 ##
 
 ##
@@ -22,7 +22,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'Unix Command, Interact with established connection',
-			'Version'       => '$Revision: 6479 $',
+			'Version'       => '$Revision: 6854 $',
 			'Description'   => 'Interacts with a shell on an established socket connection',
 			'Author'        => 'hdm',
 			'License'       => MSF_LICENSE,
@@ -31,6 +31,7 @@ module Metasploit3
 			'Handler'       => Msf::Handler::FindShell,
 			'Session'       => Msf::Sessions::CommandShell,
 			'PayloadType'   => 'cmd_interact',
+			'RequiredCmd'   => 'generic',
 			'Payload'       =>
 				{
 					'Offsets' => { },

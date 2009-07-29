@@ -1,5 +1,5 @@
 ##
-# $Id: tcp.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: tcp.rb 6823 2009-07-17 20:36:40Z hdm $
 ##
 
 ##
@@ -11,6 +11,7 @@
 
 
 require 'msf/core'
+require 'racket'
 
 class Metasploit3 < Msf::Auxiliary
 
@@ -23,7 +24,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'TCP Port Scanner',
-			'Version'     => '$Revision: 6479 $',
+			'Version'     => '$Revision: 6823 $',
 			'Description' => 'Enumerate open TCP services',
 			'Author'      => [ 'hdm', 'kris katterjohn' ],
 			'License'     => MSF_LICENSE
@@ -63,7 +64,7 @@ class Metasploit3 < Msf::Auxiliary
 				)
 				print_status(" TCP OPEN #{ip}:#{port}")
 				report_service(:host => ip, :port => port)
-				s.close
+				disconnect(s)
 			rescue ::Interrupt
 				raise $!
 			rescue ::Rex::ConnectionError

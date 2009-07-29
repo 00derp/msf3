@@ -12,7 +12,7 @@
 
 static VALUE rb_cPcap;
 
-#define PCAPRUB_VERSION "0.8-dev"
+#define PCAPRUB_VERSION "0.9-dev"
 
 #define OFFLINE 1
 #define LIVE 2
@@ -107,16 +107,15 @@ static int rbpcap_ready(rbpcap_t *rbp) {
 	return 1;
 }
 
-static void rbpcap_close(rbpcap_t *rbp) {
+static void rbpcap_free(rbpcap_t *rbp) {
 	if (rbp->pd)
 		pcap_close(rbp->pd);
-
-        if (rbp->pdt)
-                pcap_dump_close(rbp->pdt);
+	
+	if (rbp->pdt)
+		pcap_dump_close(rbp->pdt);
 
 	rbp->pd = NULL;
 	rbp->pdt = NULL;
-
 	free(rbp);
 }
 
@@ -127,7 +126,7 @@ rbpcap_new_s(VALUE class)
     rbpcap_t *rbp;
 
     // need to make destructor do a pcap_close later
-    self = Data_Make_Struct(class, rbpcap_t, 0, rbpcap_close, rbp);
+    self = Data_Make_Struct(class, rbpcap_t, 0, rbpcap_free, rbp);
     rb_obj_call_init(self, 0, 0);
 
     memset(rbp, 0, sizeof(rbpcap_t));
@@ -191,10 +190,16 @@ rbpcap_open_live(VALUE self, VALUE iface,VALUE snaplen,VALUE promisc, VALUE time
 
     Data_Get_Struct(self, rbpcap_t, rbp);
 
+	
     rbp->type = LIVE;
     memset(rbp->iface, 0, sizeof(rbp->iface));
     strncpy(rbp->iface, RSTRING(iface)->ptr, sizeof(rbp->iface) - 1);
 
+	
+	if(rbp->pd) {
+		pcap_close(rbp->pd);	
+	}
+	
     rbp->pd = pcap_open_live(
     	RSTRING(iface)->ptr,
     	NUM2INT(snaplen),
@@ -372,9 +377,9 @@ rbpcap_next(VALUE self)
 	pcap_setnonblock(rbp->pd, 1, eb);
 
 	TRAP_BEG;
-
+	
 	ret = pcap_dispatch(rbp->pd, 1, (pcap_handler) rbpcap_handler, (u_char *)&job);
-    
+	
 	TRAP_END;
 
 	if(rbp->type == OFFLINE && ret <= 0) return Qnil;
@@ -389,20 +394,18 @@ static VALUE
 rbpcap_capture(VALUE self)
 {
     rbpcap_t *rbp;
-
+	int fno = -1;
+	
     Data_Get_Struct(self, rbpcap_t, rbp);
 
 	if(! rbpcap_ready(rbp)) return self; 
 	
+	fno = pcap_get_selectable_fd(rbp->pd);
+
     for(;;) {
-
     	VALUE packet = rbpcap_next(self);
-
-    	if(packet == Qnil && rbp->type == OFFLINE)
-    		break;
-
-    	if(packet != Qnil)
-    		rb_yield(packet);
+    	if(packet == Qnil && rbp->type == OFFLINE) break;
+		packet == Qnil ? rb_thread_wait_fd(fno) : rb_yield(packet);
     }
 
     return self;
@@ -490,8 +493,8 @@ Init_pcaprub()
     rb_define_singleton_method(rb_cPcap, "open_live", rbpcap_open_live_s, 4);
     rb_define_singleton_method(rb_cPcap, "open_offline", rbpcap_open_offline_s, 1);
     rb_define_singleton_method(rb_cPcap, "open_dead", rbpcap_open_dead_s, 2);
-
-    rb_define_method(rb_cPcap, "dump_open", rbpcap_dump_open, 1);
+    rb_define_singleton_method(rb_cPcap, "dump_open", rbpcap_dump_open, 1);
+	
     rb_define_method(rb_cPcap, "dump", rbpcap_dump, 3);
 
     rb_define_method(rb_cPcap, "each", rbpcap_capture, 0);

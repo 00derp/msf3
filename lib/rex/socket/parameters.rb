@@ -89,6 +89,7 @@ class Rex::Socket::Parameters
 	#
 	# 	The number of seconds before a connection should time out
 	#
+	
 	def initialize(hash)
 		if (hash['PeerHost'])
 			self.peerhost = hash['PeerHost']
@@ -172,7 +173,7 @@ class Rex::Socket::Parameters
 		else
 			self.timeout = 5
 		end
-		
+	
 		# Whether to force IPv6 addressing
 		self.v6        = hash['IPv6'] || false
 	end

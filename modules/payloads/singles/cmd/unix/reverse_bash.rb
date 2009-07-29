@@ -1,5 +1,5 @@
 ##
-# $Id: reverse_bash.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: reverse_bash.rb 6854 2009-07-21 15:20:35Z hdm $
 ##
 
 ##
@@ -22,7 +22,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'Unix Command Shell, Reverse TCP (/dev/tcp)',
-			'Version'       => '$Revision: 6479 $',
+			'Version'       => '$Revision: 6854 $',
 			'Description'   => %q{
 				Creates an interactive shell via bash's builtin /dev/tcp.
 				This will not work on most Debian-based Linux distributions
@@ -36,6 +36,7 @@ module Metasploit3
 			'Handler'       => Msf::Handler::ReverseTcp,
 			'Session'       => Msf::Sessions::CommandShell,
 			'PayloadType'   => 'cmd_bash',
+			'RequiredCmd'   => 'bash-tcp',			
 			'Payload'       =>
 				{
 					'Offsets' => { },

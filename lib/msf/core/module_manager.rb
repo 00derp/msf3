@@ -54,11 +54,7 @@ class ModuleSet < Hash
 	# throwing an exception.
 	#
 	def get_hash_val(name)
-		begin
-			return self.fetch(name)
-		rescue IndexError
-			return nil
-		end
+		fetch(name) if has_key?(name)
 	end
 
 	#
@@ -883,7 +879,7 @@ protected
 		rescue ::Interrupt
 			raise $!
 		rescue ::Exception => e
-			errmsg = "#{e.class} #{e}"
+			errmsg = "#{file}: #{e.class} #{e}"
 			self.module_failed[file] = errmsg
 			elog(errmsg)
 			return false
@@ -902,10 +898,7 @@ protected
 		usable = false
 
 		begin
-			usable = added.is_usable
-		# If no method is defined, assume that this module is usable.
-		rescue NoMethodError
-			usable = true
+			usable = respond_to?(:is_usable) ? added.is_usable : true
 		rescue
 			elog("Exception caught during is_usable check: #{$!}")
 		end

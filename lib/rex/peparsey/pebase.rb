@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-# $Id: pebase.rb 6686 2009-06-20 17:53:53Z hdm $
+# $Id: pebase.rb 6712 2009-06-25 17:59:51Z hdm $
 
 require 'rex/peparsey/exceptions'
 require 'rex/struct2'
@@ -928,7 +928,6 @@ class PeBase
 		end
 
 		attr_reader :code_offset, :unwind_op, :op_info, :frame_offset
-	private
 		attr_writer :code_offset, :unwind_op, :op_info, :frame_offset
 
 	end
@@ -973,9 +972,6 @@ class PeBase
 
 		attr_reader :begin_address, :end_address, :unwind_info_address
 		attr_reader :unwind_info
-
-	private
-
 		attr_writer :unwind_info
 
 	end

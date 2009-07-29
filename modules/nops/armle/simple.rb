@@ -1,5 +1,5 @@
 ##
-# $Id: simple.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: simple.rb 6845 2009-07-19 16:07:59Z hdm $
 ##
 
 ##
@@ -28,7 +28,7 @@ class Metasploit3 < Msf::Nop
 		super(
 			'Name'        => 'Simple',
 			'Alias'       => 'armle_simple',
-			'Version'     => '$Revision: 6479 $',
+			'Version'     => '$Revision: 6845 $',
 			'Description' => 'Simple NOP generator',
 			'Author'      => 'hdm',
 			'License'     => MSF_LICENSE,
@@ -64,7 +64,7 @@ class Metasploit3 < Msf::Nop
 			return ([nops[rand(nops.length)]].pack("V*") * (length/4))
 		end
 
-		return (nops[0].pack("V*") * (length/4))
+		return ([nops[0]].pack("V*") * (length/4))
 	end
 
 end

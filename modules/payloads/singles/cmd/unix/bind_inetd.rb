@@ -1,5 +1,5 @@
 ##
-# $Id: bind_inetd.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: bind_inetd.rb 6854 2009-07-21 15:20:35Z hdm $
 ##
 
 ##
@@ -22,7 +22,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'Unix Command Shell, Bind TCP (inetd)',
-			'Version'       => '$Revision: 6479 $',
+			'Version'       => '$Revision: 6854 $',
 			'Description'   => 'Listen for a connection and spawn a command shell (persistent)',
 			'Author'        => 'hdm',
 			'License'       => MSF_LICENSE,
@@ -32,6 +32,7 @@ module Metasploit3
 			'Session'       => Msf::Sessions::CommandShell,
 			'PayloadType'   => 'cmd',
 			'Privileged'    => true,
+			'RequiredCmd'   => 'inetd',
 			'Payload'       =>
 				{
 					'Offsets' => { },

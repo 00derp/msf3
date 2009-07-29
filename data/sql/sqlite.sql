@@ -3,6 +3,8 @@ create table hosts (
 'id' INTEGER PRIMARY KEY NOT NULL,
 'created' TIMESTAMP,
 'address' VARCHAR(16) UNIQUE,
+'address6' VARCHAR(255),
+'mac' VARCHAR(255),
 'comm' VARCHAR(255),
 'name' VARCHAR(255),
 'state' VARCHAR(255),
@@ -12,6 +14,16 @@ create table hosts (
 'os_sp' VARCHAR(255),
 'os_lang' VARCHAR(255),
 'arch' VARCHAR(255)
+);
+
+drop table clients;
+create table clients (
+'id' INTEGER PRIMARY KEY NOT NULL,
+'host_id' INTEGER,
+'created' TIMESTAMP,
+'ua_string' VARCHAR(1024) NOT NULL,
+'ua_name' VARCHAR(64),
+'ua_ver' VARCHAR(32)
 );
 
 drop table services;
@@ -29,6 +41,7 @@ create table services (
 drop table vulns;
 create table vulns (
 'id' INTEGER PRIMARY KEY NOT NULL,
+'host_id' INTEGER,
 'service_id' INTEGER,
 'created' TIMESTAMP,
 'name' VARCHAR(1024),

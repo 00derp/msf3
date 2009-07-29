@@ -1,5 +1,5 @@
 ##
-# $Id: tftpbrute.rb 6670 2009-06-17 21:39:17Z hdm $
+# $Id: tftpbrute.rb 6847 2009-07-19 20:48:47Z egypt $
 ##
 
 ##
@@ -21,7 +21,7 @@ class Metasploit3 < Msf::Auxiliary
 			'Name'        => 'TFTP Brute Forcer',
 			'Description' => 'This module uses a dictionary to brute force valid TFTP image names from a TFTP server.',
 			'Author'      => 'antoine',
-			'Version'     => '$Revision: 6670 $',
+			'Version'     => '$Revision: 6847 $',
 			'License'     => BSD_LICENSE
 		)
 

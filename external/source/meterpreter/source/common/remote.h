@@ -13,6 +13,9 @@ typedef struct _Remote
 	HMODULE       hMetSrv;
 	SOCKET        fd;
 	CryptoContext *crypto;
+	SSL_METHOD *meth;
+	SSL_CTX *ctx;
+	SSL *ssl;
 } Remote;
 
 Remote *remote_allocate(SOCKET fd);

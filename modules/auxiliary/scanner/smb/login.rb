@@ -1,6 +1,6 @@
 
 ##
-# $Id: login.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: login.rb 6857 2009-07-21 18:50:13Z egypt $
 ##
 
 ##
@@ -25,7 +25,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'SMB Login Check Scanner',
-			#'Version'     => '$Revision: 6479 $',
+			#'Version'     => '$Revision: 6857 $',
 			'Description' => %q{
 				This module will test a SMB login on a range of machines and
 				report successful logins.  If you have loaded a database plugin

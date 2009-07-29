@@ -1455,7 +1455,7 @@ class Core
 	# Returns the revision of the framework and console library
 	#
 	def cmd_version(*args)
-		ver = "$Revision: 6476 $"
+		ver = "$Revision: 6706 $"
 
 		print_line("Framework: #{Msf::Framework::Version}.#{Msf::Framework::Revision.match(/ (.+?) \$/)[1]}")
 		print_line("Console  : #{Msf::Framework::Version}.#{ver.match(/ (.+?) \$/)[1]}")
@@ -1835,12 +1835,22 @@ protected
 		tbl = generate_module_table(type)
 
 		module_set.each_module { |refname, mod|
-			instance = mod.new
+			o = mod.new
 
-			if not regex or
-			   refname =~ regex or
-			   instance.name =~ regex
-				tbl << [ refname, instance.name ]
+			if not regex
+				tbl << [ refname, o.name ]
+				next
+			end
+			
+			# handle a search string, search deep
+			if(
+				o.name.match(regex) or
+				o.description.match(regex) or
+				o.refname.match(regex) or
+				o.references.to_s.match(regex) or
+				o.author.to_s.match(regex)
+			)
+				tbl << [ refname, o.name ]
 			end
 		}
 

@@ -1,5 +1,5 @@
 ##
-# $Id: http.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: http.rb 6902 2009-07-26 05:31:29Z hdm $
 ##
 
 ##
@@ -22,7 +22,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'Authentication Capture: HTTP',
-			'Version'     => '$Revision: 6479 $',
+			'Version'     => '$Revision: 6902 $',
 			'Description'    => %q{
 				This module provides a fake HTTP service that
 			is designed to capture authentication credentials.
@@ -262,7 +262,7 @@ class Metasploit3 < Msf::Auxiliary
 			data = "Microsoft NCSI"
 			res  = 
 				"HTTP/1.1 200 OK\r\n" +
-				"Host: #{mysrc}\r\n" +
+				"Host: www.msftncsi.com\r\n" +
 				"Expires: 0\r\n" +
 				"Cache-Control: must-revalidate\r\n" +
 				"Content-Type: text/html\r\n" +
@@ -271,6 +271,23 @@ class Metasploit3 < Msf::Auxiliary
 			cli.put(res)
 			return			
 		end
+
+=begin		
+		# Apple 'Network Status' Check (prevents a pop-up safari on the iphone)
+		if(req['Host'] == 'www.apple.com' and req.resource == '/library/test/success.html')
+			data = "\x3c\x21\x44\x4f\x43\x54\x59\x50\x45\x20\x48\x54\x4d\x4c\x20\x50\x55\x42\x4c\x49\x43\x20\x22\x2d\x2f\x2f\x57\x33\x43\x2f\x2f\x44\x54\x44\x20\x48\x54\x4d\x4c\x20\x33\x2e\x32\x2f\x2f\x45\x4e\x22\x3e\x0a\x3c\x48\x54\x4d\x4c\x3e\x0a\x3c\x48\x45\x41\x44\x3e\x0a\x09\x3c\x54\x49\x54\x4c\x45\x3e\x53\x75\x63\x63\x65\x73\x73\x3c\x2f\x54\x49\x54\x4c\x45\x3e\x0a\x3c\x2f\x48\x45\x41\x44\x3e\x0a\x3c\x42\x4f\x44\x59\x3e\x0a\x53\x75\x63\x63\x65\x73\x73\x0a\x3c\x2f\x42\x4f\x44\x59\x3e\x0a\x3c\x2f\x48\x54\x4d\x4c\x3e\x0a"
+			res  = 
+				"HTTP/1.1 200 OK\r\n" +
+				"Host: www.apple.com\r\n" +
+				"Expires: 0\r\n" +
+				"Cache-Control: must-revalidate\r\n" +
+				"Content-Type: text/html\r\n" +
+				"Content-Length: #{data.length}\r\n" +
+				"Connection: Close\r\n\r\n#{data}"
+			cli.put(res)
+			return
+		end
+=end
 
 		# Microsoft ActiveX Download
 		if (req['Host'] == 'activex.microsoft.com')

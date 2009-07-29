@@ -547,7 +547,7 @@ DWORD packet_add_completion_handler(LPCSTR requestId,
 		memcpy(&entry->handler, completion, sizeof(PacketRequestCompletion));
 
 		// Copy the request identifier
-		if (!(entry->requestId = strdup(requestId)))
+		if (!(entry->requestId = _strdup(requestId)))
 		{
 			res = ERROR_NOT_ENOUGH_MEMORY;
 
@@ -646,6 +646,7 @@ DWORD packet_transmit(Remote *remote, Packet *packet,
 	CryptoContext *crypto;
 	Tlv requestId;
 	DWORD res;
+	DWORD idx;
 
 	// If the packet does not already have a request identifier, create
 	// one for it
@@ -701,24 +702,48 @@ DWORD packet_transmit(Remote *remote, Packet *packet,
 			packet->header.length = htonl(packet->payloadLength + sizeof(TlvHeader));
 		}
 
-		// Transmit the packet's header (length, type)
-		if (send(remote_get_fd(remote), (LPCSTR)&packet->header, 
-				sizeof(packet->header), 0) == SOCKET_ERROR)
-			break;
+		idx = 0;
+		while( idx < sizeof(packet->header)) { 
+			// Transmit the packet's header (length, type)
+			res = SSL_write(
+				remote->ssl, 
+				(LPCSTR)(&packet->header) + idx, 
+				sizeof(packet->header) - idx
+			);
+				
+			if(res <= 0) {
+				dprintf("transmit header failed with return %d at index %d\n", res, idx);
+				break;
+			}
+			idx += res;
+		}
+		if(res < 0) break;
 
-		// Transmit the packet's payload
-		if (send(remote_get_fd(remote), packet->payload, 
-				packet->payloadLength, 0) == SOCKET_ERROR)
-			break;
+		idx = 0;
+		while( idx < packet->payloadLength) { 
+			// Transmit the packet's payload (length, type)
+			res = SSL_write(
+				remote->ssl, 
+				packet->payload + idx,
+				packet->payloadLength - idx
+			);
+			if(res < 0)
+				break;
 
-		// Destroy the packet
-		packet_destroy(packet);
-		
+			idx += res;
+		}
+		if(res < 0) {
+			dprintf("transmit header failed with return %d at index %d\n", res, idx);
+			break;
+		}
+
 		SetLastError(ERROR_SUCCESS);
-
 	} while (0);
 
 	res = GetLastError();
+	
+	// Destroy the packet
+	packet_destroy(packet);
 
 	return res;
 }
@@ -759,12 +784,17 @@ DWORD packet_receive(Remote *remote, Packet **packet)
 		// Read the packet length
 		while (inHeader)
 		{
-			if ((bytesRead = recv(remote_get_fd(remote), 
+			if ((bytesRead = SSL_read(remote->ssl, 
 					((PUCHAR)&header + headerBytes), 
-					sizeof(TlvHeader) - headerBytes, 0)) <= 0)
+					sizeof(TlvHeader) - headerBytes)) <= 0)
 			{
 				if (!bytesRead)
 					SetLastError(ERROR_NOT_FOUND);
+
+				if(bytesRead < 0) {
+					dprintf("receive header failed with error code %d\n", bytesRead);
+					SetLastError(ERROR_NOT_FOUND);
+				}
 
 				break;
 			}
@@ -796,15 +826,21 @@ DWORD packet_receive(Remote *remote, Packet **packet)
 		// Read the payload
 		while (payloadBytesLeft > 0)
 		{
-			if ((bytesRead = recv(remote_get_fd(remote), 
+			if ((bytesRead = SSL_read(remote->ssl, 
 					payload + payloadLength - payloadBytesLeft, 
-					payloadBytesLeft, 0)) <= 0)
+					payloadBytesLeft)) <= 0)
 			{
+
 				if (GetLastError() == WSAEWOULDBLOCK)
 					continue;
 
 				if (!bytesRead)
 					SetLastError(ERROR_NOT_FOUND);
+
+				if(bytesRead < 0) {
+					dprintf("receive payload of length %d failed with error code %d\n", payloadLength, bytesRead);
+					SetLastError(ERROR_NOT_FOUND);
+				}
 
 				break;
 			}

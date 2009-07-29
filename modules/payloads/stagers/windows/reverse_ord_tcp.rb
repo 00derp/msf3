@@ -1,5 +1,5 @@
 ##
-# $Id: reverse_ord_tcp.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: reverse_ord_tcp.rb 6706 2009-06-24 01:31:16Z hdm $
 ##
 
 ##
@@ -25,8 +25,8 @@ module Metasploit3
 
 	def initialize(info = {})
 		super(merge_info(info,
-			'Name'          => 'Reverse Ordinal TCP Stager',
-			'Version'       => '$Revision: 6479 $',
+			'Name'          => 'Reverse Ordinal TCP Stager (No NX or Win7)',
+			'Version'       => '$Revision: 6706 $',
 			'Description'   => 'Connect back to the attacker',
 			'Author'        => 'spoonm',
 			'License'       => MSF_LICENSE,

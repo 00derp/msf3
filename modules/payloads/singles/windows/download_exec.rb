@@ -1,5 +1,5 @@
 ##
-# $Id: download_exec.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: download_exec.rb 6905 2009-07-26 23:08:31Z egypt $
 ##
 
 ##
@@ -14,11 +14,6 @@ require 'msf/core'
 require 'msf/core/payload/windows/exec'
 
 
-###
-#
-# Extends the Exec payload to add a new user.
-#
-###
 module Metasploit3
 	
 	include Msf::Payload::Windows
@@ -27,7 +22,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(update_info(info,
 			'Name'          => 'Windows Executable Download and Execute',
-			'Version'       => '$Revision: 6479 $',
+			'Version'       => '$Revision: 6905 $',
 			'Description'   => 'Download an EXE from a HTTP URL and execute it',
 			'Author'        => [ 'lion[at]cnhonker.com', 'pita[at]mail.com' ],
 			'License'       => BSD_LICENSE,

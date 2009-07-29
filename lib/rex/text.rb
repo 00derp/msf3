@@ -318,7 +318,10 @@ module Text
 			if mode == ''
 				mode = 1252 # ANSI - Latan 1, default for US installs of MS products
 			else
-                raise TypeError, "Invalid codepage #{mode}, only 1252 supported for uhwtfms_half"
+				mode = mode.to_i
+			end
+			if mode != 1252
+		                raise TypeError, "Invalid codepage #{mode}, only 1252 supported for uhwtfms_half"
 			end
 			str.each_byte {|byte|
                 if ((byte >= 33 && byte <= 63) || (byte >= 96 && byte <= 126))
@@ -609,7 +612,7 @@ module Text
 		fd.close
 
 		bo = pe.index('PAYLOAD:')
-		pe[bo,  8192] = [code].pack('a8192') if bo
+		pe[bo,  2048] = [code].pack('a2048') if bo
 		pe[136,    4] = [rand(0x100000000)].pack('V')
 
 		ci = pe.index("\x31\xc9" * 160)
@@ -631,7 +634,7 @@ module Text
 		fd.close
 
 		bo = pe.index('PAYLOAD:')
-		pe[bo, 8192] = [code].pack('a8192') if bo
+		pe[bo, 2048] = [code].pack('a2048') if bo
 
 		bo = pe.index('SERVICENAME')
 		pe[bo, 11] = [name].pack('a11') if bo
@@ -651,7 +654,7 @@ module Text
 		bo = mo.index( "\x90\x90\x90\x90" * 1024 )
 		co = mo.index( " " * 512 )
 
-		mo[bo, 8192] = [code].pack('a8192') if bo
+		mo[bo, 2048] = [code].pack('a2048') if bo
 		mo[co, 512]  = [note].pack('a512') if co
 
 		return mo
@@ -667,7 +670,7 @@ module Text
 		bo = mo.index( "\x90\x90\x90\x90" * 1024 )
 		co = mo.index( " " * 512 )
 
-		mo[bo, 8192] = [code].pack('a8192') if bo
+		mo[bo, 2048] = [code].pack('a2048') if bo
 		mo[co, 512]  = [note].pack('a512') if co
 
 		return mo
@@ -683,7 +686,7 @@ module Text
 		bo = mo.index( "\x90\x90\x90\x90" * 1024 )
 		co = mo.index( " " * 512 )
 
-		mo[bo, 8192] = [code].pack('a8192') if bo
+		mo[bo, 2048] = [code].pack('a2048') if bo
 		mo[co, 512]  = [note].pack('a512') if co
 
 		return mo
@@ -699,7 +702,7 @@ module Text
 		bo = mo.index( "\x90\x90\x90\x90" * 1024 )
 		co = mo.index( " " * 512 )
 
-		mo[bo, 8192] = [code].pack('a8192') if bo
+		mo[bo, 2048] = [code].pack('a2048') if bo
 		mo[co, 512]  = [note].pack('a512') if co
 
 		return mo

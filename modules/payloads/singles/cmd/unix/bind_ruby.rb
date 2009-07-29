@@ -1,5 +1,5 @@
 ##
-# $Id: bind_ruby.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: bind_ruby.rb 6854 2009-07-21 15:20:35Z hdm $
 ##
 
 ##
@@ -20,7 +20,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'        => 'Unix Command Shell, Bind TCP (via Ruby)',
-			'Version'     => '$Revision: 6479 $',
+			'Version'     => '$Revision: 6854 $',
 			'Description' => 'Continually listen for a connection and spawn a command shell via Ruby',
 			'Author'      => 'kris katterjohn',
 			'License'     => MSF_LICENSE,
@@ -29,6 +29,7 @@ module Metasploit3
 			'Handler'     => Msf::Handler::BindTcp,
 			'Session'     => Msf::Sessions::CommandShell,
 			'PayloadType' => 'cmd',
+			'RequiredCmd' => 'ruby',			
 			'Payload'     => { 'Offsets' => {}, 'Payload' => '' }
 		))
 	end

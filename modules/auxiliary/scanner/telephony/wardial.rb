@@ -44,7 +44,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'Wardialer',
-			'Version'     => '$Revision: 6479 $',
+			'Version'     => '$Revision: 6731 $',
 			'Description' => 'Scan for dial-up systems that are connected to modems and answer telephony indials.',
 			'Author'      => [ 'I)ruid' ],
 			'License'     => MSF_LICENSE
@@ -252,8 +252,11 @@ class Metasploit3 < Msf::Auxiliary
 						modem.hangup
 						initmodem(modem, initstring)
 						num_carriers += 1
+						note = dialrange[dialnum][:result] + "\n" + dialrange[dialnum][:banner]
+						report_note(:host => dialnum, :type => "wardial_result", :data => note)
 						log_result(dialrange[dialnum])
 					when /HK_CARRIER/i
+						print_status( "Carrier: #{result}" )
 						dialrange[dialnum][:identified] = true
 						dialrange[dialnum][:result] = result
 						dialrange[dialnum][:carrier] = true
@@ -261,8 +264,11 @@ class Metasploit3 < Msf::Auxiliary
 						modem.hangup
 						initmodem(modem, initstring)
 						num_carriers += 1
+						note = dialrange[dialnum][:result] + "\n" + dialrange[dialnum][:banner]
+						report_note(:host => dialnum, :type => "wardial_result", :data => note)
 						log_result(dialrange[dialnum])
 					when /\+FCO/i
+						print_status( "Fax: #{result}" )
 						dialrange[dialnum][:identified] = true
 						dialrange[dialnum][:result] = result
 						dialrange[dialnum][:fax] = true
@@ -270,8 +276,11 @@ class Metasploit3 < Msf::Auxiliary
 						modem.hangup
 						initmodem(modem, initstring)
 						num_faxes += 1
+						note = dialrange[dialnum][:result] + "\n" + dialrange[dialnum][:banner]
+						report_note(:host => dialnum, :type => "wardial_result", :data => note)
 						log_result(dialrange[dialnum])
 					when /VOICE/i
+						print_status( "Voice" )
 						dialrange[dialnum][:identified] = true
 						dialrange[dialnum][:result] = result
 						dialrange[dialnum][:voice] = true

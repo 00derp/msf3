@@ -1,5 +1,5 @@
 ##
-# $Id: capture.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: capture.rb 6907 2009-07-27 14:05:23Z hdm $
 ##
 
 ##
@@ -21,7 +21,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'Simple Network Capture Tester',
-			'Version'     => '$Revision: 6479 $',
+			'Version'     => '$Revision: 6907 $',
 			'Description' => 'This module sniffs HTTP GET requests from the network',
 			'Author'      => 'hdm',
 			'License'     => MSF_LICENSE,
@@ -43,16 +43,23 @@ class Metasploit3 < Msf::Auxiliary
 
 		print_status("Sniffing HTTP requests...")
 		each_packet() do |pkt|
-			next if not pkt.tcp?
+
+			eth = Racket::Ethernet.new(pkt)
+			next if not eth.ethertype == 0x0800
+					
+			ip = Racket::IPv4.new(eth.payload)
+			next if not ip.protocol == 6
+	
+			tcp = Racket::TCP.new(ip.payload)
+			next if not (tcp.payload and tcp.payload.length > 0)
 			
-			if (pkt.payload =~ /GET\s+([^\s]+)\s+HTTP/smi)
+			if (tcp.payload =~ /GET\s+([^\s]+)\s+HTTP/smi)
 				print_status("GET #{$1}")
-				p pkt.payload
 			end
 			
 			true
 		end
-		
+		close_pcap()
 		print_status("Finished sniffing")
 	end
 	

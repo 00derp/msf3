@@ -1,5 +1,5 @@
 ##
-# $Id: bind_nonx_tcp.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: bind_nonx_tcp.rb 6706 2009-06-24 01:31:16Z hdm $
 ##
 
 ##
@@ -25,8 +25,8 @@ module Metasploit3
 	
 	def initialize(info = {})
 		super(merge_info(info,
-			'Name'          => 'Bind TCP Stager (No NX Support)',
-			'Version'       => '$Revision: 6479 $',
+			'Name'          => 'Bind TCP Stager (No NX or Win7)',
+			'Version'       => '$Revision: 6706 $',
 			'Description'   => 'Listen for a connection (No NX)',
 			'Author'        => 'vlad902',
 			'License'       => MSF_LICENSE,

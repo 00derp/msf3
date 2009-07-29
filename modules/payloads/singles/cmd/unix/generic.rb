@@ -1,5 +1,5 @@
 ##
-# $Id: generic.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: generic.rb 6854 2009-07-21 15:20:35Z hdm $
 ##
 
 ##
@@ -22,7 +22,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'Unix Command, Generic command execution',
-			'Version'       => '$Revision: 6479 $',
+			'Version'       => '$Revision: 6854 $',
 			'Description'   => 'Executes the supplied command',
 			'Author'        => 'hdm',
 			'License'       => MSF_LICENSE,
@@ -31,6 +31,7 @@ module Metasploit3
 			'Handler'       => Msf::Handler::None,
 			'Session'       => Msf::Sessions::CommandShell,
 			'PayloadType'   => 'cmd',
+			'RequiredCmd'   => 'generic',
 			'Payload'       =>
 				{
 					'Offsets' => { },

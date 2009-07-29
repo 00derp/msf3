@@ -1,6 +1,7 @@
 class Metasploit3 < Msf::Auxiliary
 
     include Msf::Exploit::Remote::SMB
+    include Msf::Auxiliary::Dos
 
     def initialize(info = {})
 		super(update_info(info,	
@@ -12,7 +13,7 @@ class Metasploit3 < Msf::Auxiliary
 
 			'Author'         => [ 'j.v.vallejo[at]gmail.com' ],
 			'License'        => MSF_LICENSE,
-			'Version'        => '$Revision: 6320 $',
+			'Version'        => '$Revision: 6890 $',
         	'References' => 
 				[
 					['MSB', 'MS09-001'],
