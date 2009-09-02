@@ -1,5 +1,5 @@
 ##
-# $Id: patchupmeterpreter.rb 6857 2009-07-21 18:50:13Z egypt $
+# $Id: patchupmeterpreter.rb 6929 2009-08-01 04:02:47Z hdm $
 ##
 
 ##
@@ -12,7 +12,7 @@
 
 require 'msf/core'
 require 'msf/core/payload/windows/dllinject'
-require 'msf/base/sessions/meterpreter'
+require 'msf/base/sessions/meterpreter_x86_win'
 
 
 ###
@@ -27,11 +27,11 @@ module Metasploit3
 	def initialize(info = {})
 		super(update_info(info,
 			'Name'          => 'Windows Meterpreter (skape/jt injection)',
-			'Version'       => '$Revision: 6857 $',
+			'Version'       => '$Revision: 6929 $',
 			'Description'   => 'Inject the meterpreter server DLL',
 			'Author'        => 'skape',
 			'License'       => MSF_LICENSE,
-			'Session'       => Msf::Sessions::Meterpreter))
+			'Session'       => Msf::Sessions::Meterpreter_x86_Win))
 
 		# Set advanced options
 		register_advanced_options(

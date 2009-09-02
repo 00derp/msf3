@@ -1,5 +1,5 @@
 ##
-# $Id: metsvc_reverse_tcp.rb 6848 2009-07-19 20:51:58Z hdm $
+# $Id: metsvc_reverse_tcp.rb 6929 2009-08-01 04:02:47Z hdm $
 ##
 
 ##
@@ -12,7 +12,7 @@
 
 require 'msf/core'
 require 'msf/core/handler/reverse_tcp'
-require 'msf/base/sessions/meterpreter'
+require 'msf/base/sessions/meterpreter_x86_win'
 
 module Metasploit3
 
@@ -22,14 +22,14 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'Windows Meterpreter Service, Reverse TCP Inline',
-			'Version'       => '$Revision: 6848 $',
+			'Version'       => '$Revision: 6929 $',
 			'Description'   => 'Stub payload for interacting with a Meterpreter Service',
 			'Author'        => 'hdm',
 			'License'       => MSF_LICENSE,
 			'Platform'      => 'win',
 			'Arch'          => ARCH_X86,
 			'Handler'       => Msf::Handler::ReverseTcp,
-			'Session'       => Msf::Sessions::Meterpreter,
+			'Session'       => Msf::Sessions::Meterpreter_x86_Win,
 			'Payload'       =>
 				{
 					'Offsets' => {},

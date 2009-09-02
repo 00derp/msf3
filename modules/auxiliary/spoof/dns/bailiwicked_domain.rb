@@ -30,7 +30,7 @@ class Metasploit3 < Msf::Auxiliary
 					                                      #
 				],
 			'License'        => MSF_LICENSE,
-			'Version'        => '$Revision: 6823 $',
+			'Version'        => '$Revision: 6950 $',
 			'References'     =>
 				[
 					[ 'CVE', '2008-1447' ],
@@ -302,7 +302,7 @@ class Metasploit3 < Msf::Auxiliary
 				src_ip = Rex::Text.rand_text(4).unpack("C4").join(".")
 			end
 			
-			n = Racket.new
+			n = Racket::Racket.new
 			n.l3 = Racket::IPv4.new
 			n.l3.src_ip = src_ip
 			n.l3.dst_ip = target

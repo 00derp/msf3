@@ -43,6 +43,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="..\..\source\openssl\include"
 				PreprocessorDefinitions="_DEBUG;WIN32;_LIB;USE_DLL;METERPRETER_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -219,7 +220,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\common\base_dispatch.c"
+				RelativePath="..\..\source\common\arch\win\i386\base_dispatch.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -239,7 +240,11 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\common\buffer.c"
+				RelativePath="..\..\source\common\base_dispatch_common.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\common\arch\win\buffer.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -341,7 +346,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\..\source\common\scheduler.c"
+				RelativePath="..\..\source\common\arch\win\scheduler.c"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"

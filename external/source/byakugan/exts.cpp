@@ -150,6 +150,16 @@ HRESULT CALLBACK jutsu(PDEBUG_CLIENT4 Client, PCSTR args) {
 			searchOpcodes(instructions);
 			return (S_OK);
 		}
+		if (!_stricmp(command, "searchVtptr")) {
+            char    *instructions, *offsetString;
+			DWORD	offset;
+			
+			offsetString = strtok(NULL, " ");
+			offset = strtoul(offsetString, NULL, 16);
+            instructions = offsetString + strlen(offsetString) + 1;
+            searchVtptr(offset, instructions);
+            return (S_OK);
+        }
 		if (!_stricmp(command, "listen")) {
 			bindPort = strtok(NULL, " ");
 			if (bindPort == NULL)
@@ -184,7 +194,10 @@ HRESULT CALLBACK jutsu(PDEBUG_CLIENT4 Client, PCSTR args) {
 				dprintf("[Byakugan] This command requires a buffer type, name, (sometimes) value, and size\n");
 				return (S_OK);
 			}
-			identBufJutsu(bufType, bufName, bufPatt, strtoul(bufSize, NULL, 10));
+			if (bufSize == NULL)
+				identBufJutsu(bufType, bufName, bufPatt, 0);
+			else
+				identBufJutsu(bufType, bufName, bufPatt, strtoul(bufSize, NULL, 10));
 			return (S_OK);
 		}
 		if (!_stricmp(command, "hunt")) {
@@ -207,11 +220,26 @@ HRESULT CALLBACK tenketsu(PDEBUG_CLIENT4 Client, PCSTR args) {
     command = strtok((char *)args, " ");
 	
 	if (command == NULL) {
-    	if(hookRtlHeap()) {
-        	dprintf("[Byakugan] Unable to begin realtime heap debugging.\n");
+		tenkHelp();
+		return (S_OK);
+	}
+	else if (!_stricmp(command, "model")) {
+    	if(hookRtlHeap(1)) {
+        	dprintf("[Byakugan] Unable to begin realtime heap modeling.\n");
             EXIT_API();
         	return (S_FALSE);
     	}
+	}
+	else if (!_stricmp(command, "log")) {
+    	if(hookRtlHeap(2)) {
+			dprintf("[Byakugan] Unable to begin realtime heap modeling.\n");
+			EXIT_API(); 
+            return (S_FALSE);
+		}
+	}
+	else if (!_stricmp(command, "help")) {
+		tenkHelp();
+		return (S_OK);
 	}
     else if (!_stricmp(command, "help")) {
 		tenkHelp();

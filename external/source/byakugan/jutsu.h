@@ -83,6 +83,7 @@ struct corruption {
 void    helpJutsu(void);
 void    bindJutsu(char *);
 void	searchOpcodes(char *);
+void	searchVtptr(DWORD, char *);
 DWORD WINAPI listenJutsu(LPVOID lpvParam);
 void	parseJutsu(char *, ULONG);
 void	identBufJutsu(char *, char *, char *, DWORD);
@@ -95,7 +96,7 @@ void	trackValJutsu(char *name, DWORD size, DWORD value);
 void	listTrackedVals(void);
 void	listTrackedValByName(char *name);
 ULONG64 allocateMemoryBlock(unsigned long); 
-ULONG64 searchMemory(unsigned char * byteBuffer, unsigned long length);
+ULONG64 searchMemory(unsigned char * byteBuffer, unsigned long length, ULONG64 *addressHit);
 DWORD   findAllVals(unsigned char *byteBuffer, BYTE size, struct valInstance **instance);
 void	memDiffJutsu(char *inputType, DWORD size, char *input, ULONG64 address);
 

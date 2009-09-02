@@ -1,5 +1,5 @@
 ##
-# $Id: generic_sh.rb 6738 2009-07-03 06:35:13Z egypt $
+# $Id: generic_sh.rb 6957 2009-08-17 17:42:39Z hdm $
 ##
 
 ##
@@ -18,7 +18,7 @@ class Metasploit3 < Msf::Encoder
 	def initialize
 		super(
 			'Name'             => 'Generic Shell Variable Substitution Command Encoder',
-			'Version'          => '$Revision: 6738 $',
+			'Version'          => '$Revision: 6957 $',
 			'Description'      => %q{
 				This encoder uses standard Bourne shell variable substitution
 			tricks to avoid commonly restricted characters.
@@ -32,6 +32,11 @@ class Metasploit3 < Msf::Encoder
 	# Encodes the payload
 	#
 	def encode_block(state, buf)
+		
+		# Skip encoding for empty badchars
+		if(state.badchars.length == 0)
+			return buf
+		end
 		
 		if (state.badchars.include?("-"))
 			# Then neither of the others will work.  Get rid of spaces and hope
@@ -124,13 +129,13 @@ class Metasploit3 < Msf::Encoder
 				if (state.badchars.include?("$") or state.badchars.include?("(")) 
 					raise RuntimeError
 				else
-					buf = "$(echo -ne #{hex})"
+					buf = "$(/bin/echo -ne #{hex})"
 				end
 			else
-				buf = "`echo -ne #{hex}`"
+				buf = "`/bin/echo -ne #{hex}`"
 			end
 		else
-			buf = "echo -ne #{hex}|sh"
+			buf = "/bin/echo -ne #{hex}|sh"
 		end
 		
 		# Remove spaces from the command string

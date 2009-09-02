@@ -1,5 +1,5 @@
 ##
-# $Id: hidden.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: hidden.rb 6985 2009-08-28 18:51:42Z hdm $
 ##
 
 ##
@@ -24,7 +24,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'Hidden DCERPC Service Discovery',
-			'Version'     => '$Revision: 6479 $',
+			'Version'     => '$Revision: 6985 $',
 			'Description' => %q{
 				This module will query the endpoint mapper and make a list
 			of all ncacn_tcp RPC services. It will then connect to each of
