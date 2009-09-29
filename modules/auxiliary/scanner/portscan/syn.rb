@@ -1,5 +1,5 @@
 ##
-# $Id: syn.rb 6847 2009-07-19 20:48:47Z egypt $
+# $Id: syn.rb 7055 2009-09-24 03:34:04Z hdm $
 ##
 
 ##
@@ -25,7 +25,7 @@ class Metasploit3 < Msf::Auxiliary
 				Enumerate open TCP services using a raw SYN scan.
 			},
 			'Author'      => 'kris katterjohn',
-			'Version'     => '$Revision: 6847 $', # 03/26/2009
+			'Version'     => '$Revision: 7055 $', # 03/26/2009
 			'License'     => MSF_LICENSE
 		)
 
@@ -39,7 +39,8 @@ class Metasploit3 < Msf::Auxiliary
 		register_options([
 			OptString.new('PORTS', [true, "Ports to scan (e.g. 22-25,80,110-900)", "1-10000"]),
 			OptInt.new('TIMEOUT', [true, "The reply read timeout in milliseconds", 500]),
-			OptInt.new('BATCHSIZE', [true, "The number of hosts to scan per set", 256])
+			OptInt.new('BATCHSIZE', [true, "The number of hosts to scan per set", 256]),
+			OptString.new('INTERFACE', [false, 'The name of the interface'])
 		], self.class)
 	end
 
@@ -53,7 +54,7 @@ class Metasploit3 < Msf::Auxiliary
 
 		raise "Pcaprub is not available" if not @@havepcap
 
-		pcap = ::Pcap.open_live(::Pcap.lookupdev, 68, false, 1)
+		pcap = ::Pcap.open_live(datastore['INTERFACE'] || ::Pcap.lookupdev, 68, false, 1)
 
 		ports = Rex::Socket.portspec_crack(datastore['PORTS'])
 

@@ -1,5 +1,5 @@
 ##
-# $Id: open_x11.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: open_x11.rb 7042 2009-09-19 17:24:29Z hdm $
 ##
 
 ##
@@ -20,13 +20,12 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'		=> 'X11 No-Auth Scanner',
-			'Version'	=> '$Revision: 6479 $',
+			'Version'	=> '$Revision: 7042 $',
 			'Description'	=> %q{
 				This module scans for X11 servers that allow anyone
 				to connect without authentication.
 			},
-			'Author'	=>
-				['tebo <tebodell[at]gmail.com>'],
+			'Author'	=> ['tebo <tebodell[at]gmail.com>'],
 			'References'	=>
 				[
 					['OSVDB', '309'],
@@ -35,47 +34,39 @@ class Metasploit3 < Msf::Auxiliary
 			'License'	=> MSF_LICENSE
 		)
 
-		register_options(
-			[
-				Opt::RPORT(6000)
-			],
-			self.class
-		)
-
+		register_options([
+			Opt::RPORT(6000)
+		],self.class)
 	end
 
 	def run_host(ip)
 
 		begin
 
-			print_status("Trying #{ip}")
-
 			connect
 
 			# X11.00 Null Auth Connect
-			buf =   "\x6c\x00\x0b\x00\x00\x00\x00\x00\x00\x00\x00\x00"
-
-			sock.put(buf)
+			sock.put("\x6c\x00\x0b\x00\x00\x00\x00\x00\x00\x00\x00\x00")
 			response = sock.get_once
 			
-			if response
-				success = response[0]
+			disconnect
+			
+			if(response)
+				success = response[0,1].unpack('C')[0]
 			end
 
-			if success == 1
-				vendor_len = response[24..25].unpack('s')[0]
-				vendor = response[40..(40+vendor_len)].unpack('A*')
-				
-				print_status("Open X Server @ #{ip} (#{vendor})")
-			elsif success == 0
-				print_status("Access Denied on #{ip}")
+			if(success == 1)
+				vendor_len = response[24,2].unpack('v')[0]
+				vendor = response[40,vendor_len].unpack('A*')[0]
+				print_status("#{ip} Open X Server (#{vendor})")
+			elsif (success == 0)
+				print_status("#{ip} Access Denied")
 			else
 				# X can return a reason for auth failure but we don't really care for this
 			end
-
+			
 		rescue ::Rex::ConnectionError
 		rescue ::Errno::EPIPE
-
 		end
 
 	end

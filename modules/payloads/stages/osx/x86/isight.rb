@@ -1,5 +1,5 @@
 ##
-# $Id: isight.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: isight.rb 7075 2009-09-27 21:30:45Z hdm $
 ##
 
 ##
@@ -28,9 +28,9 @@ module Metasploit3
 	def initialize(info = {})
 		super(update_info(info,
 			'Name'          => 'Mac OS X x86 iSight photo capture',
-			'Version'       => '$Revision: 6479 $',
+			'Version'       => '$Revision: 7075 $',
 			'Description'   => 'Inject a Mach-O bundle to capture a photo from the iSight',
-			'Author'        => [ 'Dino Dai Zovi <ddz@theta44.org' ],
+			'Author'        => 'ddz',
 			'License'       => MSF_LICENSE,
 			'Session'       => Msf::Sessions::CommandShell))
 

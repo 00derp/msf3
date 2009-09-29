@@ -171,7 +171,7 @@ class Core
 	#
 	def cmd_banner(*args)
 		banner  = Banner.to_s + "\n\n"
-		banner << "       =[ msf v#{Msf::Framework::Version}\n"
+		banner << "       =[ msf v#{Msf::Framework::Version} [core:#{Msf::Framework::VersionCore} api:#{Msf::Framework::VersionAPI}]\n"
 		banner << "+ -- --=[ "
 		banner << "#{framework.stats.num_exploits} exploits - "
 		banner << "#{framework.stats.num_payloads} payloads\n"
@@ -1465,7 +1465,7 @@ class Core
 	# Returns the revision of the framework and console library
 	#
 	def cmd_version(*args)
-		ver = "$Revision: 6961 $"
+		ver = "$Revision: 7043 $"
 
 		print_line("Framework: #{Msf::Framework::Version}.#{Msf::Framework::Revision.match(/ (.+?) \$/)[1]}")
 		print_line("Console  : #{Msf::Framework::Version}.#{ver.match(/ (.+?) \$/)[1]}")
@@ -1857,7 +1857,7 @@ protected
 				o.name.match(regex) or
 				o.description.match(regex) or
 				o.refname.match(regex) or
-				o.references.to_s.match(regex) or
+				o.references.map{|x| [x.ctx_id + '-' + x.ctx_val, x.to_s]}.join(' ').match(regex) or
 				o.author.to_s.match(regex)
 			)
 				tbl << [ refname, o.name ]

@@ -1,5 +1,5 @@
 ##
-# $Id: nonupper.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: nonupper.rb 7083 2009-09-28 05:23:23Z egypt $
 ##
 
 ##
@@ -21,7 +21,7 @@ class Metasploit3 < Msf::Encoder::NonUpper
 	def initialize
 		super(
 			'Name'             => "Non-Upper Encoder",
-			'Version'          => '$Revision: 6479 $',
+			'Version'          => '$Revision: 7083 $',
 			'Description'      => %q{
 				Encodes payloads a non-alpha based bytes. This allows
                 payloads to bypass both tolower() calls,
@@ -53,7 +53,17 @@ class Metasploit3 < Msf::Encoder::NonUpper
 	# payload.
 	#
 	def encode_block(state, block)
-		newchar, state.key, state.decoder_key_size = Rex::Encoder::NonUpper::encode_byte(datastore['badchars'], block.unpack('C')[0], state.key, state.decoder_key_size)
+		begin
+			newchar, state.key, state.decoder_key_size = 
+				Rex::Encoder::NonUpper::encode_byte(datastore['badchars'], block.unpack('C')[0], state.key, state.decoder_key_size)
+		rescue RuntimeError => e
+			# This is a bandaid to deal with the fact that, since it's in
+			# the Rex namespace, the encoder itself doesn't have access to the
+			# Msf exception classes.  Turn it into an actual EncodingError
+			# exception so the encoder doesn't look broken when it just fails
+			# to encode.
+			raise BadcharError if e.message == "BadChar"
+		end
 	    return newchar
     end
 

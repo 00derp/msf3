@@ -1,5 +1,5 @@
 ##
-# $Id: ib_service_mgr_info.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: ib_service_mgr_info.rb 7075 2009-09-27 21:30:45Z hdm $
 ##
 
 ##
@@ -28,10 +28,10 @@ class Metasploit3 < Msf::Auxiliary
 				and implementation of the InterBase server from InterBase
 				Services Manager.
 			},
-			'Version'	=> '$Revision: 6479 $',
+			'Version'	=> '$Revision: 7075 $',
 			'Author'	=>
 				[
-					'Ramon de Carvalho Valle <ramon@risesecurity.org>',
+					'ramon',
 					'Adriano Lima <adriano@risesecurity.org>',
 				],
 			'License'	=> MSF_LICENSE

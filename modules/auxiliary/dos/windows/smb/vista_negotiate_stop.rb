@@ -1,5 +1,6 @@
+
 ##
-# $Id: vista_negotiate_stop.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: vista_negotiate_stop.rb 7010 2009-09-08 17:41:40Z hdm $
 ##
 
 ##
@@ -25,7 +26,7 @@ class Metasploit3 < Msf::Auxiliary
 			
 			'Author'         => [ 'hdm' ],
 			'License'        => MSF_LICENSE,
-			'Version'        => '$Revision: 6479 $'
+			'Version'        => '$Revision: 7010 $'
 		))
 		
 		register_options([Opt::RPORT(445)], self.class)

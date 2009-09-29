@@ -16,9 +16,9 @@ module Metasploit3
 	def initialize(info = { })
 		super(merge_info(info,
 			'Name'		=> 'Reverse TCP Stager',
-			'Version'	=> '$Revision: 6353 $',
+			'Version'	=> '$Revision: 7075 $',
 			'Description'	=> 'Connect, read length, read buffer, execute',
-			'Author'	=> 'Dino Dai Zovi <ddz@theta44.org>',
+			'Author'	=> 'ddz',
 			'License'	=> MSF_LICENSE,
 			'Platform'	=> 'osx',
 			'Arch'		=> ARCH_X86,

@@ -1,5 +1,5 @@
 ##
-# $Id: longxor.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: longxor.rb 7075 2009-09-27 21:30:45Z hdm $
 ##
 
 ##
@@ -18,12 +18,12 @@ class Metasploit3 < Msf::Encoder::Xor
 	def initialize
 		super(
 			'Name'             => 'PPC LongXOR Encoder',
-			'Version'          => '$Revision: 6479 $',
+			'Version'          => '$Revision: 7075 $',
 			'Description'      => %q{
 				This encoder is ghandi's PPC dword xor encoder with some size tweaks
 				by HDM.
 			},
-			'Author'           => [ 'Dino Dai Zovi <ddz [at] theta44.org>', 'hdm' ],
+			'Author'           => [ 'ddz', 'hdm' ],
 			'Arch'             => ARCH_PPC,
 			'License'          => MSF_LICENSE,
 			'Decoder'          =>

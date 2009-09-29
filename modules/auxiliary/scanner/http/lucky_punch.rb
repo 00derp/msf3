@@ -1,5 +1,5 @@
 ##
-# $Id: lucky_punch.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: lucky_punch.rb 7075 2009-09-27 21:30:45Z hdm $
 ##
 
 ##
@@ -29,9 +29,9 @@ class Metasploit3 < Msf::Auxiliary
 				use lately by concatenation of HTML string that forces a persistant
 				XSS attack to redirect user browser to a attacker controller website.
 			},
-			'Author'         => [ 'ET LoWNOISE et [at] metasploit.com' ],
+			'Author'         => [ 'et' ],
 			'License'        => BSD_LICENSE,
-			'Version'        => '$Revision: 6479 $'))   
+			'Version'        => '$Revision: 7075 $'))   
 			
 		register_options(
 			[

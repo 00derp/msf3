@@ -1,5 +1,5 @@
 ##
-# $Id: lsa_transnames_heap.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: lsa_transnames_heap.rb 7045 2009-09-20 19:49:03Z hdm $
 ##
 
 ##
@@ -28,7 +28,7 @@ class Metasploit3 < Msf::Auxiliary
 			},
 			'Author'         => [ 'hdm' ],
 			'License'        => MSF_LICENSE,
-			'Version'        => '$Revision: 6479 $',
+			'Version'        => '$Revision: 7045 $',
 			'References'     =>
 				[
 					['CVE', '2007-2446'],
@@ -72,7 +72,7 @@ class Metasploit3 < Msf::Auxiliary
 		begin
 			# LsarLookupSids
 			dcerpc.call(0x0f, stub)
-		rescue Rex::Proto::DCERPC::Exceptions::NoResponse
+		rescue Rex::Proto::DCERPC::Exceptions::NoResponse, ::EOFError
 			print_good('Server did not respond, this is expected')
 		rescue => e
 			if e.to_s =~ /STATUS_PIPE_DISCONNECTED/

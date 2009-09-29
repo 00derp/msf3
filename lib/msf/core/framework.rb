@@ -17,7 +17,15 @@ class Framework
 	Minor    = 3
 	Release  = "-dev"
 	Version  = "#{Major}.#{Minor}#{Release}"
-	Revision = "$Revision: 6055 $"
+	Revision = "$Revision: 7050 $"
+
+	# API Version
+	APIMajor = 1
+	APIMinor = 0
+	
+	# Base/API Version
+	VersionCore  = Major + (Minor / 10.0)
+	VersionAPI   = APIMajor + (APIMinor / 10.0)
 	
 	#
 	# Mixin meant to be included into all classes that can have instances that

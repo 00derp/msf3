@@ -1,5 +1,5 @@
 ##
-# $Id: vforkshell.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: vforkshell.rb 7075 2009-09-27 21:30:45Z hdm $
 ##
 
 ##
@@ -19,9 +19,9 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'OSX (vfork) Command Shell',
-			'Version'       => '$Revision: 6479 $',
+			'Version'       => '$Revision: 7075 $',
 			'Description'   => 'Call vfork() if necessary and spawn a command shell',
-			'Author'        => 'Dino Dai Zovi <ddz@theta44.org>',
+			'Author'        => 'ddz',
 			'License'       => MSF_LICENSE,
 			'Platform'      => 'osx',
 			'Arch'          => ARCH_X86,

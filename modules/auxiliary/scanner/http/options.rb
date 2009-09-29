@@ -21,7 +21,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'HTTP Options Detection',
-			'Version'     => '$Revision: 6846 $',
+			'Version'     => '$Revision: 7078 $',
 			'Description' => 'Display available HTTP options for each system',
 			'Author'       => ['CG'],
 			'License'     => MSF_LICENSE
@@ -34,7 +34,7 @@ class Metasploit3 < Msf::Auxiliary
 		begin
 			res = send_request_raw({
 				'version'      => '1.0',
-				'uri'          => '*',					
+				'uri'          => '/',					
 				'method'       => 'OPTIONS'
 			}, 10)
 
@@ -57,7 +57,7 @@ class Metasploit3 < Msf::Auxiliary
 
 				wmap_report(rep_id,'WEB_SERVER','OPTIONS',"#{res.headers['Allow']}",nil)
 			else
-				print_status("No options.")
+				''
 			end
 			
 		rescue ::Rex::ConnectionRefused, ::Rex::HostUnreachable, ::Rex::ConnectionTimeout

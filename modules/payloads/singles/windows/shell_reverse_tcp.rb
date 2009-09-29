@@ -1,5 +1,5 @@
 ##
-# $Id: shell_reverse_tcp.rb 6925 2009-07-31 18:02:14Z hdm $
+# $Id: shell_reverse_tcp.rb 7075 2009-09-27 21:30:45Z hdm $
 ##
 
 ##
@@ -22,9 +22,9 @@ module Metasploit3
 	def initialize(info = {})
 		super(merge_info(info,
 			'Name'          => 'Windows Command Shell, Reverse TCP Inline',
-			'Version'       => '$Revision: 6925 $',
+			'Version'       => '$Revision: 7075 $',
 			'Description'   => 'Connect back to attacker and spawn a command shell',
-			'Author'        => [ 'vlad902', 'Stephen Fewer <stephen_fewer[at]harmonysecurity[dot]com>' ],
+			'Author'        => [ 'vlad902', 'sf' ],
 			'License'       => MSF_LICENSE,
 			'Platform'      => 'win',
 			'Arch'          => ARCH_X86,

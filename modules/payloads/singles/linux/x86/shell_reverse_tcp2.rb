@@ -1,4 +1,4 @@
-# $Id: shell_reverse_tcp2.rb 6479 2009-04-13 14:33:26Z kris $
+# $Id: shell_reverse_tcp2.rb 7075 2009-09-27 21:30:45Z hdm $
 ##
 
 ##
@@ -28,9 +28,9 @@ module Metasploit3
 # and: puts shellcode.decode
 		super(merge_info(info,
 			'Name'          => 'Linux Command Shell, Reverse TCP Inline - Metasm demo',
-			'Version'       => '$Revision: 6479 $',
+			'Version'       => '$Revision: 7075 $',
 			'Description'   => 'Connect back to attacker and spawn a command shell',
-			'Author'        => 'skape + Yoann Guillot and Julien Tinnes for metasm PoC',
+			'Author'        => ['skape', 'Yoann Guillot', 'Julien Tinnes <julien[at]cr0.org>'],
 			'License'       => MSF_LICENSE,
 			'Platform'      => 'linux',
 			'Arch'          => ARCH_X86,

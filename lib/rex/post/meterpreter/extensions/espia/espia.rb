@@ -36,11 +36,18 @@ class Espia < Extension
 		return true
 	end
 	
-	def espia_audio_get_dev_audio()
+	def espia_audio_get_dev_audio(rsecs)
 		request = Packet.create_request('espia_audio_get_dev_audio')
+		request.add_tlv(TLV_TYPE_DEV_RECTIME, rsecs)
 		response = client.send_request(request)
-		
+	
 		return true
+	end
+	
+	def espia_image_get_dev_screen
+		request  = Packet.create_request('espia_image_get_dev_screen')		
+		response = client.send_request(request)
+		response.get_tlv_value(TLV_TYPE_DEV_SCREEN)
 	end
 
 end

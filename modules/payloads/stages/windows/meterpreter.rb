@@ -1,5 +1,5 @@
 ##
-# $Id: meterpreter.rb 6929 2009-08-01 04:02:47Z hdm $
+# $Id: meterpreter.rb 7075 2009-09-27 21:30:45Z hdm $
 ##
 
 ##
@@ -26,9 +26,9 @@ module Metasploit3
 	def initialize(info = {})
 		super(update_info(info,
 			'Name'          => 'Windows Meterpreter (Reflective Injection)',
-			'Version'       => '$Revision: 6929 $',
+			'Version'       => '$Revision: 7075 $',
 			'Description'   => 'Inject the meterpreter server DLL via the Reflective Dll Injection payload',
-			'Author'        => ['skape','Stephen Fewer <info@harmonysecurity.com>'],
+			'Author'        => ['skape','sf'],
 			'License'       => MSF_LICENSE,
 			'Session'       => Msf::Sessions::Meterpreter_x86_Win))
 

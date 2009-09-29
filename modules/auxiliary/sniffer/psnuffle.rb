@@ -27,7 +27,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'				=> 'pSnuffle Packet Sniffer',
-			'Version'           => '$Revision: 6965 $',
+			'Version'           => '$Revision: 7036 $',
 			'Description'       => 'This module sniffs passwords like dsniff did in the past',
 			'Author'			=> 'Max Moser  <mmo@remote-exploit.org>',
 			'License'			=> MSF_LICENSE,
@@ -58,7 +58,7 @@ class Metasploit3 < Msf::Auxiliary
 	def load_protocols
 		base = datastore['ProtocolBase']
 		if (not File.directory?(base))
-			raise RuntimeError "The ProtocolBase parameter is set to an invalid directory"
+			raise RuntimeError,"The ProtocolBase parameter is set to an invalid directory"
 		end
 		
 		@protos = {}
