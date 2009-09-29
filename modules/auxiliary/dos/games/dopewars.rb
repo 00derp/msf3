@@ -1,4 +1,4 @@
-# Dopeware DOS attack.
+# Dopewars DOS attack.
 
 require 'msf/core'
 
