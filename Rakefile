@@ -16,6 +16,7 @@ rescue LoadError
 end
 
 require 'rake/rdoctask'
+require 'darkfish-rdoc'
 Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = 'msf3'
@@ -23,6 +24,10 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
   rdoc.rdoc_files.include('documentation/**/*')
+  rdoc.options += [
+      '-N',
+      '-f', 'darkfish',
+  ]
 end
 
 require 'spec/rake/spectask'
