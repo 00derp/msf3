@@ -207,7 +207,7 @@ class Db
 					print_line("\t-e          Launch exploits against all matched targets")
 #					print_line("\t-s          Only obtain a single shell per target system (NON-FUNCTIONAL)")
 					print_line("\t-r          Use a reverse connect shell")
-					print_line("\t-b          Use a bind shell on a random port")
+					print_line("\t-b          Use a bind shell on a random port (default)")
 					print_line("\t-q          Disable exploit module output")
 					print_line("\t-I  [range] Only exploit hosts inside this range")
 					print_line("\t-X  [range] Always exclude hosts inside this range")
@@ -577,8 +577,10 @@ class Db
 		def load_nmap_xml(data)
 			doc = REXML::Document.new(data)
 			doc.elements.each('/nmaprun/host') do |host|
-				addr = host.elements['address'].attributes['addr']
-				host.elements['ports'].elements.each('port') do |port|
+				addr  = host.elements['address'].attributes['addr']
+				ports = host.elements['ports']
+				next if not ports
+				ports.elements.each('port') do |port|
 					prot = port.attributes['protocol']
 					pnum = port.attributes['portid']
 					
@@ -659,10 +661,12 @@ class Db
 		def range_include?(ranges, addr)
 
 			ranges.each do |sets|
-				sets.each do |set|
+				sets.split(',').each do |set|
 					rng = set.split('-').map{ |c| Rex::Socket::addr_atoi(c) }
 					tst = Rex::Socket::addr_atoi(addr)
-					if (tst >= rng[0] and tst <= rng[1])
+					if (not rng[1])
+						return tst == rng[0]
+					elsif (tst >= rng[0] and tst <= rng[1])
 						return true
 					end
 				end

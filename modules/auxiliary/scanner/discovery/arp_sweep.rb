@@ -11,7 +11,7 @@ class Metasploit3 < Msf::Auxiliary
 	def initialize
 		super(
 			'Name'        => 'ARP Sweep Local Network Discovery',
-			'Version'     => '$Revision: 6885 $',
+			'Version'     => '$Revision: 7130 $',
 			'Description' => %q{
 				Enumerate alive Hosts in local network using ARP requests.
 			},
@@ -24,6 +24,7 @@ class Metasploit3 < Msf::Auxiliary
 			OptString.new('SMAC', [true, "Source MAC Address"]),
 		], self.class)
 		
+		deregister_options('SNAPLEN', 'FILTER')
 	end
 
 	def run_batch_size

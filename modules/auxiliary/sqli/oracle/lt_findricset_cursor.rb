@@ -23,7 +23,7 @@ class Metasploit3 < Msf::Auxiliary
 					},
 			'Author'         => ['CG'],
 			'License'        => MSF_LICENSE,
-			'Version'        => '$Revision:$',
+			'Version'        => '$Revision: 7128 $',
 			'References'     =>
 				[
 					[ 'BID', '26098' ],

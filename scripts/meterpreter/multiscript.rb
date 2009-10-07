@@ -1,16 +1,17 @@
 #Meterpreter script for running multiple scripts on a Meterpreter Session
 #Provided by Carlos Perez at carlos_perez[at]darkoperator[dot]com
-#Verion: 0.1
+#Verion: 0.2
 ################## Variable Declarations ##################
 session = client
-# Setting Arguments
+# Setting Argument 
+
 @@exec_opts = Rex::Parser::Arguments.new(
         "-h" => [ false,"Help menu."                        ],
         "-c" => [ true,"Collection of scripts to execute. Each script command must be enclosed in double quotes and separated by a semicolon."],
         "-s" => [ true,"Text file with list of commands, one per line."]
 )
 #Setting Argument variables
-commands = []
+commands = ""
 script = []
 help = 0
 
@@ -18,16 +19,12 @@ help = 0
 # Function for running a list of scripts stored in a array
 def script_exec(session,scrptlst)
 	print_status("Running script List ...")
-	scrptlst.each do |scrpt|
+	scrptlst.each_line do |scrpt|
 		begin
-			print_status "\trunning command #{scrpt}"
-
-                        # Set up some local bindings.
-                        input  = shell.input
-                        output = shell.output
-
+			print_status "\trunning script #{scrpt.chomp}"
+			client = session
                         args = scrpt.split
-                        session.execute_script(args.shift, binding)
+                        session.execute_script(args.shift,binding)
                 rescue ::Exception => e
                         print_error("Error: #{e.class} #{e}")
                         print_error("Error in script: #{scrpt}")
@@ -44,14 +41,14 @@ end
 case opt
 
 when "-c"
-        commands = val.split(";")
+        commands = val.gsub(/;/,"\n")
 when "-s"
         script = val
         if not ::File.exists?(script)
                 raise "Script List File does not exists!"
         else
                 ::File.open(script, "r").each_line do |line|
-                        commands << line.chomp
+                        commands << line
                 end
         end
 

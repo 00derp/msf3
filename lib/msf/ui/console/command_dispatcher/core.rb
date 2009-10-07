@@ -27,7 +27,8 @@ class Core
 		"-v" => [ false, "List verbose fields."                           ],
 		"-q" => [ false, "Quiet mode."                                    ],
 		"-d" => [  true, "Detach an interactive session"                  ],
-		"-k" => [  true, "Terminate session."                             ])
+		"-k" => [  true, "Terminate session."                             ],
+		"-K" => [ false, "Terminate all sessions."                        ])
 
 	@@jobs_opts = Rex::Parser::Arguments.new(
 		"-h" => [ false, "Help banner."                                   ],
@@ -965,7 +966,10 @@ class Core
 				when "-k"
 					method = 'kill'
 					sid = val
-				
+
+				when "-K"
+					method = 'killall'
+
 				when "-d"
 					method = 'detach'
 					sid = val
@@ -987,6 +991,14 @@ class Core
 				if ((session = framework.sessions.get(sid)))
 					print_status("Killing session #{sid}")
 					session.kill
+				end
+
+			when 'killall'
+				print_status("Killing all sessions...")
+				framework.sessions.each_sorted do |sid|
+					if ((session = framework.sessions.get(sid)))
+						session.kill
+					end
 				end
 				
 			when 'detach'
@@ -1465,7 +1477,7 @@ class Core
 	# Returns the revision of the framework and console library
 	#
 	def cmd_version(*args)
-		ver = "$Revision: 7043 $"
+		ver = "$Revision: 7100 $"
 
 		print_line("Framework: #{Msf::Framework::Version}.#{Msf::Framework::Revision.match(/ (.+?) \$/)[1]}")
 		print_line("Console  : #{Msf::Framework::Version}.#{ver.match(/ (.+?) \$/)[1]}")

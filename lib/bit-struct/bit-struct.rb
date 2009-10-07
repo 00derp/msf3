@@ -9,6 +9,7 @@
 # The String#replace method is useful.
 #
 class BitStruct < String
+  VERSION = "0.13.6"
 
   class Field
     # Offset of field in bits.
@@ -111,8 +112,22 @@ class BitStruct < String
   class FieldNameError < StandardError; end
   
   @default_options = {}
-    
+  
+  @initial_value = nil
+  @closed = nil
+  @rest_field = nil
+  @note = nil
+
   class << self
+    def inherited cl
+      cl.instance_eval do
+        @initial_value = nil
+        @closed = nil
+        @rest_field = nil
+        @note = nil
+      end
+    end
+    
     # ------------------------
     # :section: field access methods
     #
@@ -151,11 +166,10 @@ class BitStruct < String
         if opts[:allow_method_conflict] || opts["allow_method_conflict"]
           warn "Field #{name} is already defined as a method."
         else
-          raise FieldNameError,"Field #{name} is already defined as a method. #{caller}"
+          raise FieldNameError,"Field #{name} is already defined as a method."
         end
       end
 =end
-
       field_class = opts[:field_class]
       
       prev = fields[-1] || NULL_FIELD
@@ -229,6 +243,11 @@ class BitStruct < String
   # Return the list of fields for this class.
   def fields
     self.class.fields
+  end
+  
+  # Return the rest field for this class.
+  def rest_field
+    self.class.rest_field
   end
   
   # Return the field with the given name.
@@ -369,6 +388,7 @@ class BitStruct < String
     if include_rest and (rest_field = self.class.rest_field)
       ary << send(rest_field.name)
     end
+    ary
   end
   
   class << self
